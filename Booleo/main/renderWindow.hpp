@@ -1,5 +1,5 @@
 #pragma once
-#include "libraries.hpp"
+#include "entity.hpp"
 
 class RenderWindow
 {
@@ -9,7 +9,7 @@ public:
 	void cleanUp();
 	void clear();
 
-	void render(SDL_Texture* p_tex);
+	void render(ENTITY& p_entity);
 	void display();
 private:
 	SDL_Window* window;

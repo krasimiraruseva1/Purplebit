@@ -153,11 +153,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries.hpp" />
+    <ClInclude Include="entity.hpp" />
     <ClInclude Include="renderWindow.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

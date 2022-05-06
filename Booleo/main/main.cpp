@@ -1,4 +1,5 @@
 #include "RenderWindow.hpp"
+#include "entity.hpp"
 
 int main(int argc, char* args[])
 {
@@ -13,7 +14,10 @@ int main(int argc, char* args[])
 	}
 
 	RenderWindow window("Booleo", 1280, 720);
-	SDL_Texture* mainMenu = window.loadTexture(""); //main menu screen here
+	SDL_Surface* surface = IMG_Load("../assets/mainScreen.png");
+
+	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
+	ENTITY vsPlayerButton(0, 0, mainMenu); //Button goes here
 
 	bool gameRunning = true;
 	SDL_Event event;
@@ -26,7 +30,7 @@ int main(int argc, char* args[])
 				gameRunning = false;
 		}
 		window.clear();
-		window.render(mainMenu);
+		window.render(vsPlayerButton);
 		window.display();
 	}
 	window.cleanUp();

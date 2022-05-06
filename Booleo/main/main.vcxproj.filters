@@ -21,12 +21,18 @@
     <ClCompile Include="renderWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="renderWindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
