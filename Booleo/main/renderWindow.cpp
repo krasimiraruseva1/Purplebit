@@ -23,6 +23,9 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
 	{
 		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
 	}
+	else {
+		std::cout << "Loaded!!!";
+	}
 	return texture;
 }
 
@@ -45,6 +48,11 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
+SDL_Window* RenderWindow::getWindow()
+{
+	return window;
+}
+
 void RenderWindow::render(ENTITY& p_entity)
 {
 	SDL_Rect src;
@@ -54,10 +62,10 @@ void RenderWindow::render(ENTITY& p_entity)
 	src.h = p_entity.getCurrentFrame().h;
 
 	SDL_Rect dest;
-	dest.x = p_entity.getX() * 4;
-	dest.y = p_entity.getY() * 4;
-	dest.w = p_entity.getCurrentFrame().w * 4;
-	dest.h = p_entity.getCurrentFrame().h * 4;
+	dest.x = p_entity.getX();
+	dest.y = p_entity.getY();
+	dest.w = p_entity.getCurrentFrame().w;
+	dest.h = p_entity.getCurrentFrame().h;
 
 	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dest);
 }

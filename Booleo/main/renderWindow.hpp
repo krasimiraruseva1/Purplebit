@@ -10,7 +10,7 @@ public:
 	int getRefreshRate();
 	void cleanUp();
 	void clear();
-
+	SDL_Window* getWindow();
 	void render(ENTITY& p_entity);
 	void display();
 private:
