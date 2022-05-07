@@ -161,6 +161,7 @@
     <ClInclude Include="libraries.hpp" />
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="renderWindow.hpp" />
+    <ClInclude Include="utilities.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

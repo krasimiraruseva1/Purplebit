@@ -1,5 +1,6 @@
 #include "RenderWindow.hpp"
 #include "entity.hpp"
+#include "utilities.hpp"
 
 int main(int argc, char* args[])
 {
@@ -21,17 +22,39 @@ int main(int argc, char* args[])
 
 	bool gameRunning = true;
 	SDL_Event event;
+	
+	const float timeAdvanced = 0.01;
+	float accumulator = 0.0;
+	float currentTime = utils::hireTimeInSeconds();
 
 	while (gameRunning)
 	{
-		while (SDL_PollEvent(&event)) 
+		int startTicks = SDL_GetTicks();
+		float newTime = utils::hireTimeInSeconds();
+		float frameTime = newTime - currentTime;
+		currentTime = newTime;
+
+		accumulator += frameTime;
+		while (accumulator >= timeAdvanced)
 		{
-			if (event.type == SDL_QUIT)
-				gameRunning = false;
+			while (SDL_PollEvent(&event))
+			{
+				if (event.type == SDL_QUIT)
+					gameRunning = false;
+			}
+			accumulator -= timeAdvanced;
 		}
+		const float alpha = accumulator / timeAdvanced; 
+
 		window.clear();
 		window.render(vsPlayerButton);
 		window.display();
+		
+		int frameTicks = SDL_GetTicks() - startTicks;
+		if (frameTicks < 1000 / window.getRefreshRate())
+		{
+			SDL_Delay(1000 / window.getRefreshRate() - frameTicks);
+		}
 	}
 	window.cleanUp();
 	SDL_Quit();

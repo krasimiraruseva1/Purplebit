@@ -35,5 +35,8 @@
     <ClInclude Include="entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utilities.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
