@@ -1,4 +1,4 @@
-#include "GamePlay.h"
+#include "GamePlay.hpp"
 
 void GamePlay::InitGame()
 {

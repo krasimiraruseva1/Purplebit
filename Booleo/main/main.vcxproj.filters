@@ -53,10 +53,10 @@
     <ClInclude Include="textureManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
+    <ClInclude Include="main.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GamePlay.h">
+    <ClInclude Include="GamePlay.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

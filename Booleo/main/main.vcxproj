@@ -162,10 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.hpp" />
-    <ClInclude Include="GamePlay.h" />
+    <ClInclude Include="GamePlay.hpp" />
     <ClInclude Include="libraries.hpp" />
     <ClInclude Include="entity.hpp" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="main.hpp" />
     <ClInclude Include="renderWindow.hpp" />
     <ClInclude Include="textureManager.hpp" />
     <ClInclude Include="utilities.hpp" />
