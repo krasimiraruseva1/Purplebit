@@ -1,5 +1,6 @@
 ﻿  main.cpp
 C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\utilities.hpp(8,11): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(39,33): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(70,12): warning C4101: 'playCards': unreferenced local variable
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(52,33): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(107,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(110,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   main.vcxproj -> C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\main.exe

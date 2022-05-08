@@ -1,4 +1,6 @@
 #include "GamePlay.hpp"
+#include "entity.hpp"
+#include "renderWindow.hpp"
 
 void GamePlay::InitGame()
 {
@@ -6,11 +8,14 @@ void GamePlay::InitGame()
 	
 	for (int i = 0; i < 6; i++)
 	{
-		startCards[i] = rand() % 2;
+		startCards[i] = rand() % 49;
 	}
 
 }
 
-bool* GamePlay::GetCards() {
+int* GamePlay::GetCards() //
+{
 	return &startCards[0];
 }
+
+

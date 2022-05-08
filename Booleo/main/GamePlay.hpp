@@ -1,14 +1,16 @@
 #pragma once
 #include <cstdlib>
 #include <ctime>
+#include "libraries.hpp"
+
 class GamePlay
 {
 public:
 	void InitGame();
-	bool* GetCards();
+	int* GetCards(); //
 
 private:
-	bool startCards[6];
+	int startCards[6];
 	
 };
 
