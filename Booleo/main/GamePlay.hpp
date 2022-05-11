@@ -7,10 +7,12 @@ class GamePlay
 {
 public:
 	void InitGame();
-	int* GetCards(); //
-
+	//void swap(int* a, int* b);
+	//void shuffle(int card[], int n);
 private:
-	int startCards[6];
-	
+};
+
+struct Player {
+	int cardIndexes[4] = { ((rand() % 48) + 1), ((rand() % 48) + 1), ((rand() % 48) + 1), ((rand() % 48) + 1) };
 };
 

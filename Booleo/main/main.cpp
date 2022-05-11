@@ -1,10 +1,10 @@
 #include "RenderWindow.hpp"
 #include "entity.hpp"
+#include "libraries.hpp"
 #include "utilities.hpp"
 #include "entity.hpp"
 #include "main.hpp"
 #include "GamePlay.hpp"
-
 
 int main(int argc, char* args[])
 {
@@ -18,10 +18,50 @@ int main(int argc, char* args[])
 		std::cout << "IMG Error: " << SDL_GetError() << std::endl;
 	}
 
-
 	RenderWindow window("Booleo", 1280, 720);
 	bool home = true;
 	int buttonPressed = NULL;
+	GamePlay gameplay;
+	std::string P1hand[10];
+	std::string P2hand[10];
+	std::string deck[48];
+
+	srand(time(0));
+	for (int i = 0; i < 48; i++)
+	{
+		if (i <= 7)
+		{
+			deck[i] = "OR0";
+		}
+		else if (i > 7 && i <= 15)
+		{
+			deck[i] = "OR1";
+		}
+		else if (i > 15 && i <= 23)
+		{
+			deck[i] = "AND0";
+		}
+		else if (i > 23 && i <= 31)
+		{
+			deck[i] = "AND1";
+		}
+		else if (i > 31 && i <= 39)
+		{
+			deck[i] = "XOR0";
+		}
+		else if (i > 39 && i <= 47)
+		{
+			deck[i] = "XOR1";
+		}
+	}
+	for (int i = 0; i < 48; i++)
+	{
+		int index = rand() % 48;
+		std::string temp = deck[i];
+		deck[i] = deck[index];
+		deck[index] = temp;
+	}
+	
 	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
 	SDL_Texture* PvC = window.loadTexture("../assets/PvC.png");
@@ -52,9 +92,30 @@ int main(int argc, char* args[])
 	const float timeAdvanced = 0.01;
 	float accumulator = 0.0;
 	float currentTime = utils::hireTimeInSeconds();
-	GamePlay gameplay;
-	gameplay.InitGame();
+	
+	/*int deck[] = {0, 1, 2, 3, 4, 5, 6, 7, 8,
+				  9, 10, 11, 12, 13, 14, 15,
+				  16, 17, 18, 19, 20, 21, 22,
+				  23, 24, 25, 26, 27, 28, 29,
+				  30, 31, 32, 33, 34, 35, 36,
+				  37, 38, 39, 40, 41, 42, 43,
+				  44, 45, 46, 47 };
+	for (int i = 0; i < 47; i++)
+	{
+		gameplay.shuffle(&deck[i], 48);
+	}
 
+	for (int i = 4; i < 8; i++)
+
+	{
+		P2hand[i] = deck[i];
+		for (int j = i; j <= 48; j++)
+		{
+			deck[i] = deck[i + 1];
+			deck[48 - 1] = 0;
+		}
+		std::cout << P2hand[i] << " ";
+	}*/
 	while (gameRunning)
 	{
 		int startTicks = SDL_GetTicks();
@@ -83,7 +144,265 @@ int main(int argc, char* args[])
 			window.render(playmatScreen);
 			if (buttonPressed == 1)
 			{
-				window.render(PvCButton);
+				SDL_Texture* CARD1_P1C = NULL;
+				SDL_Texture* CARD2_P1C = NULL;
+				SDL_Texture* CARD3_P1C = NULL;
+				SDL_Texture* CARD4_P1C = NULL;
+
+				SDL_Texture* CARD1_P2C = NULL;
+				SDL_Texture* CARD2_P2C = NULL;
+				SDL_Texture* CARD3_P2C = NULL;
+				SDL_Texture* CARD4_P2C = NULL;
+				for (int i = 0; i < 8; i++)
+				{
+					if (i == 0)
+					{
+						if (deck[i] == "OR0")
+						{
+							CARD1_P1C = ZeroOrCard;
+						}
+						else if (deck[i] == "OR1")
+						{
+							CARD1_P1C = OneOrCard;
+						}
+						else if (deck[i] == "AND0")
+						{
+							CARD1_P1C = ZeroAndCard;
+						}
+						else if (deck[i] == "AND1")
+						{
+							CARD1_P1C = OneAndCard;
+						}
+						else if (deck[i] == "XOR0")
+						{
+							CARD1_P1C = ZeroXorCard;
+						}
+						else if (deck[i] == "XOR1")
+						{
+							CARD1_P1C = OneOrCard;
+						}
+					}
+					else if (i == 1)
+					{
+						if (deck[i] == "OR0")
+						{
+							CARD2_P1C = ZeroOrCard;
+						}
+						else if (deck[i] == "OR1")
+						{
+							CARD2_P1C = OneOrCard;
+						}
+						else if (deck[i] == "AND0")
+						{
+							CARD2_P1C = ZeroAndCard;
+						}
+						else if (deck[i] == "AND1")
+						{
+							CARD2_P1C = OneAndCard;
+						}
+						else if (deck[i] == "XOR0")
+						{
+							CARD2_P1C = ZeroXorCard;
+						}
+						else if (deck[i] == "XOR1")
+						{
+							CARD2_P1C = OneOrCard;
+						}
+					}
+
+					else if (i == 2)
+					{
+						if (deck[i] == "OR0")
+						{
+							CARD3_P1C = ZeroOrCard;
+						}
+						else if (deck[i] == "OR1")
+						{
+							CARD3_P1C = OneOrCard;
+						}
+						else if (deck[i] == "AND0")
+						{
+							CARD3_P1C = ZeroAndCard;
+						}
+						else if (deck[i] == "AND1")
+						{
+							CARD3_P1C = OneAndCard;
+						}
+						else if (deck[i] == "XOR0")
+						{
+							CARD3_P1C = ZeroXorCard;
+						}
+						else if (deck[i] == "XOR1")
+						{
+							CARD3_P1C = OneOrCard;
+						}
+					}
+					else if (i == 3)
+					{
+						if (deck[i] == "OR0")
+						{
+							CARD4_P1C = ZeroOrCard;
+						}
+						else if (deck[i] == "OR1")
+						{
+							CARD4_P1C = OneOrCard;
+						}
+						else if (deck[i] == "AND0")
+						{
+							CARD4_P1C = ZeroAndCard;
+						}
+						else if (deck[i] == "AND1")
+						{
+							CARD4_P1C = OneAndCard;
+						}
+						else if (deck[i] == "XOR0")
+						{
+							CARD4_P1C = ZeroXorCard;
+						}
+						else if (deck[i] == "XOR1")
+						{
+							CARD4_P1C = OneOrCard;
+						}
+						
+					}
+					for (int i = 4; i < 8; i++)
+					{
+						if (i == 4)
+						{
+							if (deck[i] == "OR0")
+							{
+								CARD1_P2C = ZeroOrCard;
+							}
+							else if (deck[i] == "OR1")
+							{
+								CARD1_P2C = OneOrCard;
+							}
+							else if (deck[i] == "AND0")
+							{
+								CARD1_P2C = ZeroAndCard;
+							}
+							else if (deck[i] == "AND1")
+							{
+								CARD1_P2C = OneAndCard;
+							}
+							else if (deck[i] == "XOR0")
+							{
+								CARD1_P2C = ZeroXorCard;
+							}
+							else if (deck[i] == "XOR1")
+							{
+								CARD1_P2C = OneOrCard;
+							}
+						}
+
+						else if (i == 5)
+						{
+							if (deck[i] == "OR0")
+							{
+								CARD2_P2C = ZeroOrCard;
+							}
+							else if (deck[i] == "OR1")
+							{
+								CARD2_P2C = OneOrCard;
+							}
+							else if (deck[i] == "AND0")
+							{
+								CARD2_P2C = ZeroAndCard;
+							}
+							else if (deck[i] == "AND1")
+							{
+								CARD2_P2C = OneAndCard;
+							}
+							else if (deck[i] == "XOR0")
+							{
+								CARD2_P2C = ZeroXorCard;
+							}
+							else if (deck[i] == "XOR1")
+							{
+								CARD2_P2C = OneOrCard;
+							}
+						}
+
+						else if (i == 6)
+						{
+							if (deck[i] == "OR0")
+							{
+								CARD3_P2C = ZeroOrCard;
+							}
+							else if (deck[i] == "OR1")
+							{
+								CARD3_P2C = OneOrCard;
+							}
+							else if (deck[i] == "AND0")
+							{
+								CARD3_P2C = ZeroAndCard;
+							}
+							else if (deck[i] == "AND1")
+							{
+								CARD3_P2C = OneAndCard;
+							}
+							else if (deck[i] == "XOR0")
+							{
+								CARD3_P2C = ZeroXorCard;
+							}
+							else if (deck[i] == "XOR1")
+							{
+								CARD3_P2C = OneOrCard;
+							}
+						}
+
+						else if (i == 7)
+						{
+							if (deck[i] == "OR0")
+							{
+								CARD4_P2C = ZeroOrCard;
+							}
+							else if (deck[i] == "OR1")
+							{
+								CARD4_P2C = OneOrCard;
+							}
+							else if (deck[i] == "AND0")
+							{
+								CARD4_P2C = ZeroAndCard;
+							}
+							else if (deck[i] == "AND1")
+							{
+								CARD4_P2C = OneAndCard;
+							}
+							else if (deck[i] == "XOR0")
+							{
+								CARD4_P2C = ZeroXorCard;
+							}
+							else if (deck[i] == "XOR1")
+							{
+								CARD4_P2C = OneOrCard;
+							}
+						}
+					}
+				}
+
+				ENTITY CARD1_P1(75, 450 ,CARD1_P1C);
+				ENTITY CARD2_P1(75, 570, CARD2_P1C);
+				ENTITY CARD3_P1(160, 450, CARD3_P1C);
+				ENTITY CARD4_P1(160, 570, CARD4_P1C);
+
+				ENTITY CARD1_P2(77, 40, CARD1_P2C);
+				ENTITY CARD2_P2(77, 160, CARD2_P2C);
+				ENTITY CARD3_P2(160, 40, CARD3_P2C);
+				ENTITY CARD4_P2(160, 160, CARD4_P2C);
+
+				ENTITY DRAWDECK(160, 305, BackCard);
+				window.render(DRAWDECK);
+
+				window.render(CARD1_P1);
+				window.render(CARD2_P1);
+				window.render(CARD3_P1);
+				window.render(CARD4_P1);
+
+				window.render(CARD1_P2);
+				window.render(CARD2_P2);
+				window.render(CARD3_P2);
+				window.render(CARD4_P2);
 			}
 			else if (buttonPressed == 2)
 			{

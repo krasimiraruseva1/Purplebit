@@ -23,9 +23,6 @@ SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
 	{
 		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
 	}
-	else {
-		std::cout << "Loaded!!!";
-	}
 	return texture;
 }
 
