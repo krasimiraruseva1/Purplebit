@@ -317,11 +317,35 @@ int main(int argc, char* args[])
 							CARD1_P1C = ZeroXorCard;
 							
 						}
-						else if (deck[i] == "XOR1")
+						else if (deck[i] == "XOR1") //here
 						{
 							CARD1_P1C = OneOrCard;
 					
 						}
+
+						if (CARD1_P1C == ZeroOrCard)
+						{
+							if ((INITCARD1 == ZeroZero && INITCARD1 == OneZero) && (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+							{
+								//stays
+							}
+							else
+							{
+								//stays
+							}
+						}
+						if (CARD1_P1C == OneOrCard)
+						{
+							if ((INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && (INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+							{
+								//stays
+							}
+							else
+							{
+								//goes back
+							}
+						}
+
 					}
 					else if (i == 1)
 					{
@@ -536,6 +560,11 @@ int main(int argc, char* args[])
 				if (CARD1_P1.isMouseClicked())
 				{
 					CARD1_P1.setDraggable(!CARD1_P1.getDrag());
+				}
+
+				if (CARD1_P1.getX() >= 425 && CARD1_P1.getX() <= 435 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
+				{
+					
 				}
 
 				CARD1_P1.drag();
