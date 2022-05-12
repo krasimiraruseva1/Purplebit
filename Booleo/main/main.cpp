@@ -61,6 +61,17 @@ int main(int argc, char* args[])
 		deck[i] = deck[index];
 		deck[index] = temp;
 	}
+
+	std::string initialCards[6] = {"ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2"};
+
+	for (int i = 0; i < 6; i++)
+	{
+		int index = rand() % 6;
+		std::string temp = initialCards[i];
+		initialCards[i] = initialCards[index];
+		initialCards[index] = temp;
+	}
+
 	
 	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
@@ -78,6 +89,11 @@ int main(int argc, char* args[])
 	SDL_Texture* ZeroOrCard = window.loadTexture("../assets/ZeroOrCard.png");
 	SDL_Texture* ZeroXorCard = window.loadTexture("../assets/ZeroXorCard.png");
 
+	SDL_Texture* ZeroOne = window.loadTexture("../assets/StartingCardOneOne.png");
+	SDL_Texture* ZeroZero = window.loadTexture("../assets/StartingCardZeroZero.png");
+	SDL_Texture* OneOne = window.loadTexture("../assets/StartingCardOneOne.png");
+	SDL_Texture* OneZero = window.loadTexture("../assets/StartingCardOneZero.png");
+
 	SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0);
 
 	ENTITY mainScreen(0, 0, mainMenu); //Button goes here
@@ -93,29 +109,6 @@ int main(int argc, char* args[])
 	float accumulator = 0.0;
 	float currentTime = utils::hireTimeInSeconds();
 	
-	/*int deck[] = {0, 1, 2, 3, 4, 5, 6, 7, 8,
-				  9, 10, 11, 12, 13, 14, 15,
-				  16, 17, 18, 19, 20, 21, 22,
-				  23, 24, 25, 26, 27, 28, 29,
-				  30, 31, 32, 33, 34, 35, 36,
-				  37, 38, 39, 40, 41, 42, 43,
-				  44, 45, 46, 47 };
-	for (int i = 0; i < 47; i++)
-	{
-		gameplay.shuffle(&deck[i], 48);
-	}
-
-	for (int i = 4; i < 8; i++)
-
-	{
-		P2hand[i] = deck[i];
-		for (int j = i; j <= 48; j++)
-		{
-			deck[i] = deck[i + 1];
-			deck[48 - 1] = 0;
-		}
-		std::cout << P2hand[i] << " ";
-	}*/
 	while (gameRunning)
 	{
 		int startTicks = SDL_GetTicks();
@@ -143,7 +136,13 @@ int main(int argc, char* args[])
 			window.clear();
 			window.render(playmatScreen);
 			if (buttonPressed == 1)
-			{
+			{	
+				SDL_Texture* INITCARD1 = NULL;
+				SDL_Texture* INITCARD2 = NULL;
+				SDL_Texture* INITCARD3 = NULL;
+				SDL_Texture* INITCARD4 = NULL;
+				SDL_Texture* INITCARD5 = NULL;
+
 				SDL_Texture* CARD1_P1C = NULL;
 				SDL_Texture* CARD2_P1C = NULL;
 				SDL_Texture* CARD3_P1C = NULL;
@@ -153,6 +152,130 @@ int main(int argc, char* args[])
 				SDL_Texture* CARD2_P2C = NULL;
 				SDL_Texture* CARD3_P2C = NULL;
 				SDL_Texture* CARD4_P2C = NULL;
+
+				for (int i = 0; i < 5; i++)
+				{
+					if (i == 0)
+					{
+						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+						{
+							INITCARD1 = ZeroOne;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD1 = ZeroZero;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD1 = ZeroZero;
+						}
+						else if (initialCards[i] == "ONEONE")
+						{
+							INITCARD1 = OneOne;
+						}
+						else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+						{
+							INITCARD1 = OneZero;
+						}
+					}
+
+					if (i == 1)
+					{
+						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+						{
+							INITCARD2 = ZeroOne;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD2 = ZeroZero;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD2 = ZeroZero;
+						}
+						else if (initialCards[i] == "ONEONE")
+						{
+							INITCARD2 = OneOne;
+						}
+						else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+						{
+							INITCARD2 = OneZero;
+						}
+
+						else if (i == 2)
+						{
+							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+							{
+								INITCARD3 = ZeroOne;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD3 = ZeroZero;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD3 = ZeroZero;
+							}
+							else if (initialCards[i] == "ONEONE")
+							{
+								INITCARD3 = OneOne;
+							}
+							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+							{
+								INITCARD3 = OneZero;
+							}
+						}
+
+						else if (i == 3)
+						{
+							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+							{
+								INITCARD4 = ZeroOne;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD4 = ZeroZero;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD4 = ZeroZero;
+							}
+							else if (initialCards[i] == "ONEONE")
+							{
+								INITCARD4 = OneOne;
+							}
+							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+							{
+								INITCARD4 = OneZero;
+							}
+						}
+
+						else if (i == 4)
+						{
+							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+							{
+								INITCARD5 = ZeroOne;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD5 = ZeroZero;
+							}
+							else if (initialCards[i] == "ZEROZERO")
+							{
+								INITCARD5 = ZeroZero;
+							}
+							else if (initialCards[i] == "ONEONE")
+							{
+								INITCARD5 = OneOne;
+							}
+							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+							{
+								INITCARD5 = OneZero;
+							}
+						}
+					}
+				}
+
 				for (int i = 0; i < 8; i++)
 				{
 					if (i == 0)
@@ -381,6 +504,12 @@ int main(int argc, char* args[])
 					}
 				}
 
+				ENTITY INIT1(730, 360, INITCARD1);
+				ENTITY INIT2(75, 570, INITCARD2);
+				ENTITY INIT3(160, 450, INITCARD3);
+				ENTITY INIT4(160, 570, INITCARD4);
+				ENTITY INIT5(160, 570, INITCARD5);
+
 				ENTITY CARD1_P1(75, 450 ,CARD1_P1C);
 				ENTITY CARD2_P1(75, 570, CARD2_P1C);
 				ENTITY CARD3_P1(160, 450, CARD3_P1C);
@@ -393,6 +522,12 @@ int main(int argc, char* args[])
 
 				ENTITY DRAWDECK(160, 305, BackCard);
 				window.render(DRAWDECK);
+
+				window.render(INIT1);
+				//window.render(INIT2);
+				//window.render(INIT3);
+				//window.render(INIT4);
+				//window.render(INIT5);
 
 				window.render(CARD1_P1);
 				window.render(CARD2_P1);
