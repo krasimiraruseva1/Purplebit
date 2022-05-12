@@ -108,7 +108,7 @@ int main(int argc, char* args[])
 	const float timeAdvanced = 0.01;
 	float accumulator = 0.0;
 	float currentTime = utils::hireTimeInSeconds();
-	
+
 	while (gameRunning)
 	{
 		int startTicks = SDL_GetTicks();
@@ -552,19 +552,6 @@ int main(int argc, char* args[])
 				window.render(PvCnotButton);
 			}
 			
-			/*ENTITY* playCards[6];
-			int* cards = gameplay.GetCards();
-
-			for (int i = 0; i < 6; i++)
-			{
-				if (cards[i]) {
-					playCards[i] = new ENTITY(i * 50, 0, BackCard);
-				}
-				else {
-					playCards[i] = new ENTITY(i * 50, 0, cards);
-				}
-				window.render(*playCards[i]);
-			}*/
 		}
 
 

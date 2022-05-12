@@ -1,6 +1,8 @@
-﻿  main.cpp
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\utilities.hpp(8,11): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(29,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(108,33): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(24,11): warning C4101: 'gameplay': unreferenced local variable
+﻿  LINK : C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\main.exe not found or not built by the last incremental link; performing full link
+background.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'background.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
+entity.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'entity.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
+GamePlay.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'GamePlay.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
+main.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'main.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
+renderWindow.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'renderWindow.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
+textureManager.obj : warning LNK4099: PDB 'vc143.pdb' was not found with 'textureManager.obj' or at 'C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\vc143.pdb'; linking object as if no debug info
   main.vcxproj -> C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\main.exe
