@@ -81,6 +81,8 @@ int main(int argc, char* args[])
 	SDL_Texture* PvPnot = window.loadTexture("../assets/PvPnot.png");
 
 	SDL_Texture* BackCard = window.loadTexture("../assets/BackCard.png");
+	SDL_Texture* DeckAsset = window.loadTexture("../assets/CardDeck.png");
+
 	SDL_Texture* NotCard = window.loadTexture("../assets/NotCard.png");
 	SDL_Texture* OneAndCard = window.loadTexture("../assets/OneAndCard.png");
 	SDL_Texture* OneOrCard = window.loadTexture("../assets/OneOrCard.png");
@@ -108,6 +110,8 @@ int main(int argc, char* args[])
 	const float timeAdvanced = 0.01;
 	float accumulator = 0.0;
 	float currentTime = utils::hireTimeInSeconds();
+
+	int tempCount = 0; //h
 
 	while (gameRunning)
 	{
@@ -201,79 +205,80 @@ int main(int argc, char* args[])
 						{
 							INITCARD2 = OneZero;
 						}
+					}
 
-						else if (i == 2)
+					if (i == 2)
+					{
+						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
 						{
-							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
-							{
-								INITCARD3 = ZeroOne;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD3 = ZeroZero;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD3 = ZeroZero;
-							}
-							else if (initialCards[i] == "ONEONE")
-							{
-								INITCARD3 = OneOne;
-							}
-							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
-							{
-								INITCARD3 = OneZero;
-							}
+							INITCARD3 = ZeroOne;
 						}
-
-						else if (i == 3)
+						else if (initialCards[i] == "ZEROZERO")
 						{
-							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
-							{
-								INITCARD4 = ZeroOne;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD4 = ZeroZero;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD4 = ZeroZero;
-							}
-							else if (initialCards[i] == "ONEONE")
-							{
-								INITCARD4 = OneOne;
-							}
-							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
-							{
-								INITCARD4 = OneZero;
-							}
+							INITCARD3 = ZeroZero;
 						}
-
-						else if (i == 4)
+						else if (initialCards[i] == "ZEROZERO")
 						{
-							if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
-							{
-								INITCARD5 = ZeroOne;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD5 = ZeroZero;
-							}
-							else if (initialCards[i] == "ZEROZERO")
-							{
-								INITCARD5 = ZeroZero;
-							}
-							else if (initialCards[i] == "ONEONE")
-							{
-								INITCARD5 = OneOne;
-							}
-							else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
-							{
-								INITCARD5 = OneZero;
-							}
+							INITCARD3 = ZeroZero;
+						}
+						else if (initialCards[i] == "ONEONE")
+						{
+							INITCARD3 = OneOne;
+						}
+						else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+						{
+							INITCARD3 = OneZero;
 						}
 					}
+
+					if (i == 3)
+					{
+						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+						{
+							INITCARD4 = ZeroOne;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD4 = ZeroZero;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD4 = ZeroZero;
+						}
+						else if (initialCards[i] == "ONEONE")
+						{
+							INITCARD4 = OneOne;
+						}
+						else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+						{
+							INITCARD4 = OneZero;
+						}
+					}
+
+					if (i == 4)
+					{
+						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
+						{
+							INITCARD5 = ZeroOne;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD5 = ZeroZero;
+						}
+						else if (initialCards[i] == "ZEROZERO")
+						{
+							INITCARD5 = ZeroZero;
+						}
+						else if (initialCards[i] == "ONEONE")
+						{
+							INITCARD5 = OneOne;
+						}
+						else if (initialCards[i] == "ONEZERO" || initialCards[i] == "ONEZERO2")
+						{
+							INITCARD5 = OneZero;
+						}
+					}
+
 				}
 
 				for (int i = 0; i < 8; i++)
@@ -504,11 +509,11 @@ int main(int argc, char* args[])
 					}
 				}
 
-				ENTITY INIT1(730, 360, INITCARD1);
-				ENTITY INIT2(75, 570, INITCARD2);
-				ENTITY INIT3(160, 450, INITCARD3);
-				ENTITY INIT4(160, 570, INITCARD4);
-				ENTITY INIT5(160, 570, INITCARD5);
+				ENTITY INIT1(360, 305, INITCARD1);
+				ENTITY INIT2(487, 305, INITCARD2);
+				ENTITY INIT3(614, 305, INITCARD3);
+				ENTITY INIT4(745, 305, INITCARD4);
+				ENTITY INIT5(873, 305, INITCARD5);
 
 				ENTITY CARD1_P1(75, 450 ,CARD1_P1C);
 				ENTITY CARD2_P1(75, 570, CARD2_P1C);
@@ -520,14 +525,14 @@ int main(int argc, char* args[])
 				ENTITY CARD3_P2(160, 40, CARD3_P2C);
 				ENTITY CARD4_P2(160, 160, CARD4_P2C);
 
-				ENTITY DRAWDECK(160, 305, BackCard);
+				ENTITY DRAWDECK(125, 303, DeckAsset);
 				window.render(DRAWDECK);
 
 				window.render(INIT1);
-				//window.render(INIT2);
-				//window.render(INIT3);
-				//window.render(INIT4);
-				//window.render(INIT5);
+				window.render(INIT2);
+				window.render(INIT3);
+				window.render(INIT4);
+				window.render(INIT5);
 
 				window.render(CARD1_P1);
 				window.render(CARD2_P1);
@@ -538,6 +543,11 @@ int main(int argc, char* args[])
 				window.render(CARD2_P2);
 				window.render(CARD3_P2);
 				window.render(CARD4_P2);
+
+				while (tempCount != 48){
+					std::cout << deck[tempCount] << std::endl;
+					tempCount++;
+				}
 			}
 			else if (buttonPressed == 2)
 			{
