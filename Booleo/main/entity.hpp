@@ -9,9 +9,11 @@ public:
 	void setX(float value);
 	float getY();
 	void setY(float value);
-	void drag(bool active);
+	void drag();
 	void controlDrag();
 	void setDraggable(bool active);
+	bool isMouseClicked();
+	bool getDrag();
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 private:

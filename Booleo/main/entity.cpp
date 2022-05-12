@@ -36,9 +36,8 @@ void ENTITY::setY(float value)
 	y = value;
 }
 
-void ENTITY::drag(bool active)
+void ENTITY::drag()
 {
-	setDraggable(active);
 	if (draggable) 
 	{
 		controlDrag();
@@ -51,16 +50,18 @@ void ENTITY::controlDrag()
 	Uint32 buttons;
 	SDL_PumpEvents();  // make sure we have the latest mouse state.
 	buttons = SDL_GetMouseState(&buttonX, &buttonY);
-
+	setX(buttonX - currentFrame.w / 2);
+	setY(buttonY - currentFrame.h / 2);
+	/*
 	if (draggable) {
 
-		setX(buttonX-currentFrame.w/2);
-		setY(buttonY-currentFrame.h/2);
-
+		
+		/*
 		if ((buttons & SDL_BUTTON_LMASK) != 0) {
 			draggable = false;
 			SDL_Delay(500);
 		}
+		//
 	}
 	else
 	{
@@ -74,11 +75,41 @@ void ENTITY::controlDrag()
 		}
 
 	}
+	*/
 }
 
 void ENTITY::setDraggable(bool active)
 {
 	draggable = active;
+}
+
+bool ENTITY::isMouseClicked()
+{
+	int x, y;
+	Uint32 buttons;
+
+	SDL_PumpEvents();  // make sure we have the latest mouse state.
+
+	buttons = SDL_GetMouseState(&x, &y);
+
+	if ((buttons & SDL_BUTTON_LMASK) != 0) 
+	{
+		int width = getCurrentFrame().w;
+		int height = getCurrentFrame().h;
+		if (getX() <= x && x <= getX() + width
+			&& getY() <= y && y <= getY() + height)
+		{
+			//SDL_Delay(60);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ENTITY::getDrag()
+{
+	return draggable;
 }
 
 SDL_Texture* ENTITY::getTex()

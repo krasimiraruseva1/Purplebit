@@ -6,6 +6,14 @@
 #include "main.hpp"
 #include "GamePlay.hpp"
 
+std::string P1hand[10];
+std::string P2hand[10];
+std::string deck[48];
+
+SDL_Rect* selectedRect = NULL;
+bool leftMouseButtonDown = false;
+SDL_Point mousePos;
+
 int main(int argc, char* args[])
 {
 	if (SDL_Init(SDL_INIT_VIDEO) > 0)
@@ -22,9 +30,7 @@ int main(int argc, char* args[])
 	bool home = true;
 	int buttonPressed = NULL;
 	GamePlay gameplay;
-	std::string P1hand[10];
-	std::string P2hand[10];
-	std::string deck[48];
+
 
 	srand(time(0));
 	for (int i = 0; i < 48; i++)
@@ -62,7 +68,7 @@ int main(int argc, char* args[])
 		deck[index] = temp;
 	}
 
-	std::string initialCards[6] = {"ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2"};
+	std::string initialCards[6] = { "ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2" };
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -72,7 +78,7 @@ int main(int argc, char* args[])
 		initialCards[index] = temp;
 	}
 
-	
+
 	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
 	SDL_Texture* PvC = window.loadTexture("../assets/PvC.png");
@@ -130,7 +136,7 @@ int main(int argc, char* args[])
 			}
 			accumulator -= timeAdvanced;
 		}
-		const float alpha = accumulator / timeAdvanced; 
+		const float alpha = accumulator / timeAdvanced;
 
 		window.clear();
 		if (home) {
@@ -140,7 +146,7 @@ int main(int argc, char* args[])
 			window.clear();
 			window.render(playmatScreen);
 			if (buttonPressed == 1)
-			{	
+			{
 				SDL_Texture* INITCARD1 = NULL;
 				SDL_Texture* INITCARD2 = NULL;
 				SDL_Texture* INITCARD3 = NULL;
@@ -157,6 +163,7 @@ int main(int argc, char* args[])
 				SDL_Texture* CARD3_P2C = NULL;
 				SDL_Texture* CARD4_P2C = NULL;
 
+
 				for (int i = 0; i < 5; i++)
 				{
 					if (i == 0)
@@ -164,6 +171,7 @@ int main(int argc, char* args[])
 						if (initialCards[i] == "ZEROONE" || initialCards[i] == "ZEROONE2")
 						{
 							INITCARD1 = ZeroOne;
+
 						}
 						else if (initialCards[i] == "ZEROZERO")
 						{
@@ -281,6 +289,7 @@ int main(int argc, char* args[])
 
 				}
 
+
 				for (int i = 0; i < 8; i++)
 				{
 					if (i == 0)
@@ -296,18 +305,22 @@ int main(int argc, char* args[])
 						else if (deck[i] == "AND0")
 						{
 							CARD1_P1C = ZeroAndCard;
+							
 						}
 						else if (deck[i] == "AND1")
 						{
 							CARD1_P1C = OneAndCard;
+							
 						}
 						else if (deck[i] == "XOR0")
 						{
 							CARD1_P1C = ZeroXorCard;
+							
 						}
 						else if (deck[i] == "XOR1")
 						{
 							CARD1_P1C = OneOrCard;
+					
 						}
 					}
 					else if (i == 1)
@@ -391,7 +404,7 @@ int main(int argc, char* args[])
 						{
 							CARD4_P1C = OneOrCard;
 						}
-						
+
 					}
 					for (int i = 4; i < 8; i++)
 					{
@@ -514,11 +527,21 @@ int main(int argc, char* args[])
 				ENTITY INIT3(614, 305, INITCARD3);
 				ENTITY INIT4(745, 305, INITCARD4);
 				ENTITY INIT5(873, 305, INITCARD5);
+				
+				static ENTITY CARD1_P1(75, 450, CARD1_P1C);
+				static ENTITY CARD2_P1(75, 570, CARD2_P1C);
+				static ENTITY CARD3_P1(160, 450, CARD3_P1C);
+				static ENTITY CARD4_P1(160, 570, CARD4_P1C);
 
-				ENTITY CARD1_P1(75, 450 ,CARD1_P1C);
-				ENTITY CARD2_P1(75, 570, CARD2_P1C);
-				ENTITY CARD3_P1(160, 450, CARD3_P1C);
-				ENTITY CARD4_P1(160, 570, CARD4_P1C);
+				if (CARD1_P1.isMouseClicked())
+				{
+					CARD1_P1.setDraggable(!CARD1_P1.getDrag());
+				}
+
+				CARD1_P1.drag();
+
+				//CARD3_P1.setDraggable(true);
+				//CARD4_P1.setDraggable(true);
 
 				ENTITY CARD1_P2(77, 40, CARD1_P2C);
 				ENTITY CARD2_P2(77, 160, CARD2_P2C);
@@ -544,7 +567,7 @@ int main(int argc, char* args[])
 				window.render(CARD3_P2);
 				window.render(CARD4_P2);
 
-				while (tempCount != 48){
+				while (tempCount != 48) {
 					std::cout << deck[tempCount] << std::endl;
 					tempCount++;
 				}
@@ -561,13 +584,13 @@ int main(int argc, char* args[])
 			{
 				window.render(PvCnotButton);
 			}
-			
+
 		}
 
 
 
 		window.display();
-		
+
 		int frameTicks = SDL_GetTicks() - startTicks;
 		if (frameTicks < 1000 / window.getRefreshRate())
 		{
@@ -596,7 +619,7 @@ void ShowHome(RenderWindow& window, ENTITY& mainScreen, ENTITY& Button1, ENTITY&
 		int width = Button1.getCurrentFrame().w;
 		int height = Button1.getCurrentFrame().h;
 		if (Button1.getX() <= buttonX && buttonX <= Button1.getX() + width
-			&& Button1.getY() <= buttonY && buttonY <= Button1.getY() + height) 
+			&& Button1.getY() <= buttonY && buttonY <= Button1.getY() + height)
 		{
 			home = false; //link to PvC
 			buttonPressed = 1;
