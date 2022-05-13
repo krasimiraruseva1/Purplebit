@@ -97,7 +97,7 @@ int main(int argc, char* args[])
 	SDL_Texture* ZeroOrCard = window.loadTexture("../assets/ZeroOrCard.png");
 	SDL_Texture* ZeroXorCard = window.loadTexture("../assets/ZeroXorCard.png");
 
-	SDL_Texture* ZeroOne = window.loadTexture("../assets/StartingCardOneOne.png");
+	SDL_Texture* ZeroOne = window.loadTexture("../assets/StartingCardZeroOne.png");
 	SDL_Texture* ZeroZero = window.loadTexture("../assets/StartingCardZeroZero.png");
 	SDL_Texture* OneOne = window.loadTexture("../assets/StartingCardOneOne.png");
 	SDL_Texture* OneZero = window.loadTexture("../assets/StartingCardOneZero.png");
@@ -323,28 +323,7 @@ int main(int argc, char* args[])
 					
 						}
 
-						if (CARD1_P1C == ZeroOrCard)
-						{
-							if ((INITCARD1 == ZeroZero && INITCARD1 == OneZero) && (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
-							{
-								//stays
-							}
-							else
-							{
-								//stays
-							}
-						}
-						if (CARD1_P1C == OneOrCard)
-						{
-							if ((INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && (INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
-							{
-								//stays
-							}
-							else
-							{
-								//goes back
-							}
-						}
+
 
 					}
 					else if (i == 1)
@@ -561,11 +540,568 @@ int main(int argc, char* args[])
 				{
 					CARD1_P1.setDraggable(!CARD1_P1.getDrag());
 				}
-
+				//Check avilabilaty of CARD1 on line 4 card1
 				if (CARD1_P1.getX() >= 425 && CARD1_P1.getX() <= 435 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
-					
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) || !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if ((INITCARD1 != ZeroOne && INITCARD1 != ZeroOne) && (INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
 				}
+
+				//Check avilabilaty of CARD1 on line 4 card2
+				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 665 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD2 == ZeroZero && INITCARD2 == OneZero) && !(INITCARD3 == OneZero && INITCARD3 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD2 == ZeroOne || INITCARD2 == ZeroOne) && !(INITCARD3 == ZeroOne && INITCARD3 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD2 == ZeroOne || INITCARD2 == OneOne) && (INITCARD3 == ZeroOne || INITCARD3 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD2 == OneZero || INITCARD2 == ZeroZero) || (INITCARD3 == OneZero && INITCARD3 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD2 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD2 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 4 card3
+				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD3 == ZeroZero && INITCARD3 == OneZero) && !(INITCARD4 == OneZero && INITCARD4 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD3 == ZeroOne || INITCARD3 == ZeroOne) && !(INITCARD4 == ZeroOne && INITCARD4 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD3 == ZeroOne || INITCARD3 == OneOne) && (INITCARD4 == OneZero || INITCARD4 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD3 == OneZero || INITCARD3 == ZeroZero) || (INITCARD4 == OneZero && INITCARD4 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD3 != INITCARD4)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD3 == INITCARD4)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 4 card4
+				if (CARD1_P1.getX() >= 795 && CARD1_P1.getX() <= 805 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD4 == ZeroZero && INITCARD5 == OneZero) && !(INITCARD2 == OneZero && INITCARD5 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD4 == ZeroOne || INITCARD4 == ZeroOne) && !(INITCARD5 == ZeroOne && INITCARD5 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD4 == ZeroOne || INITCARD4 == OneOne) && (INITCARD5 == ZeroOne || INITCARD5 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD4 == OneZero || INITCARD4 == ZeroZero) && (INITCARD5 == OneZero && INITCARD5 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD4 != INITCARD5)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD4 == INITCARD5)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 3 card1
+				if (CARD1_P1.getX() >= 485 && CARD1_P1.getX() <= 495 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 3 card2
+				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 3 card3
+				if (CARD1_P1.getX() >= 740 && CARD1_P1.getX() <= 750 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 2 card1
+				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 560 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 2 card2
+				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+				//Check avilabilaty of CARD1 on line 1 card1
+				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 615 && CARD1_P1.getY() <= 620)
+				{
+					if (CARD1_P1C == ZeroOrCard)
+					{
+						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) && !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneOrCard)
+					{
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroAndCard)
+					{
+						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneAndCard)
+					{
+						if ((INITCARD1 == OneZero || INITCARD1 == ZeroZero) || (INITCARD2 == OneZero && INITCARD2 == ZeroZero))
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+					if (CARD1_P1C == ZeroXorCard)
+					{
+						if (INITCARD1 != INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+					}
+					if (CARD1_P1C == OneXorCard)
+					{
+						if (INITCARD1 == INITCARD2)
+						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+
+					}
+				}
+
+
+
 
 				CARD1_P1.drag();
 
