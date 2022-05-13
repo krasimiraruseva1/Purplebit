@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Users\Lenovo\Desktop\Purplebit\Booleo\main\utilities.hpp(8,11): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\Lenovo\Desktop\Purplebit\Booleo\main\main.cpp(35,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Lenovo\Desktop\Purplebit\Booleo\main\main.cpp(116,33): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Lenovo\Desktop\Purplebit\Booleo\main\main.cpp(32,11): warning C4101: 'gameplay': unreferenced local variable
-  main.vcxproj -> C:\Users\Lenovo\Desktop\Purplebit\Booleo\Debug\main.exe
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\utilities.hpp(8,11): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(35,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(116,33): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\qwiwe\Desktop\Purplebit\Booleo\main\main.cpp(32,11): warning C4101: 'gameplay': unreferenced local variable
+  main.vcxproj -> C:\Users\qwiwe\Desktop\Purplebit\Booleo\Debug\main.exe

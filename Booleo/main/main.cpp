@@ -553,7 +553,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if ((INITCARD1 != ZeroOne && INITCARD1 != ZeroOne) && (INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if ((INITCARD1 != ZeroOne && INITCARD1 != ZeroZero) && (INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -609,7 +609,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD2 == ZeroOne || INITCARD2 == ZeroOne) && !(INITCARD3 == ZeroOne && INITCARD3 == ZeroZero))
+						if  (!(INITCARD2 == ZeroOne || INITCARD2 == ZeroZero) && !(INITCARD3 == ZeroOne && INITCARD3 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -665,7 +665,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD3 == ZeroOne || INITCARD3 == ZeroOne) && !(INITCARD4 == ZeroOne && INITCARD4 == ZeroZero))
+						if  (!(INITCARD3 == ZeroOne || INITCARD3 == ZeroZero) && !(INITCARD4 == ZeroOne && INITCARD4 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -721,7 +721,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD4 == ZeroOne || INITCARD4 == ZeroOne) && !(INITCARD5 == ZeroOne && INITCARD5 == ZeroZero))
+						if  (!(INITCARD4 == ZeroOne || INITCARD4 == ZeroZero) && !(INITCARD5 == ZeroOne && INITCARD5 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -777,7 +777,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -833,7 +833,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -889,7 +889,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -945,7 +945,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1001,7 +1001,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1057,7 +1057,7 @@ int main(int argc, char* args[])
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroOne) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
