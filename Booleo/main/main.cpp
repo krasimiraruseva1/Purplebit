@@ -153,6 +153,21 @@ int main(int argc, char* args[])
 				SDL_Texture* INITCARD4 = NULL;
 				SDL_Texture* INITCARD5 = NULL;
 
+				SDL_Texture* LINE4CARD1 = NULL;
+				SDL_Texture* LINE4CARD2 = NULL;
+				SDL_Texture* LINE4CARD3 = NULL;
+				SDL_Texture* LINE4CARD4 = NULL;
+
+
+				SDL_Texture* LINE3CARD1 = NULL;
+				SDL_Texture* LINE3CARD2 = NULL;
+				SDL_Texture* LINE3CARD3 = NULL;
+
+				SDL_Texture* LINE2CARD1 = NULL;
+				SDL_Texture* LINE2CARD2 = NULL;
+
+				SDL_Texture* LINE1CARD1 = NULL;
+
 				SDL_Texture* CARD1_P1C = NULL;
 				SDL_Texture* CARD2_P1C = NULL;
 				SDL_Texture* CARD3_P1C = NULL;
@@ -530,6 +545,18 @@ int main(int argc, char* args[])
 				ENTITY INIT3(614, 305, INITCARD3);
 				ENTITY INIT4(745, 305, INITCARD4);
 				ENTITY INIT5(873, 305, INITCARD5);
+
+				ENTITY INIT1(430, 420, LINE4CARD1);
+				ENTITY INIT2(560, 420, LINE4CARD2);
+				ENTITY INIT3(590, 420, LINE4CARD3);
+				ENTITY INIT4(800, 420, LINE4CARD4);
+				ENTITY INIT5(490, 485, LINE3CARD1);
+				ENTITY INIT5(620, 485, LINE3CARD2);
+				ENTITY INIT5(746, 465, LINE3CARD3);
+				ENTITY INIT5(560, 570, LINE2CARD1);
+				ENTITY INIT5(690, 570, LINE2CARD2);
+				ENTITY INIT5(620, 615, LINE1CARD1);
+
 				
 				static ENTITY CARD1_P1(75, 450, CARD1_P1C);
 				static ENTITY CARD2_P1(75, 570, CARD2_P1C);
@@ -550,6 +577,7 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
@@ -605,6 +633,13 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+						}
+						else
+						{ 
+							LINE4CARD1 = ZeroOrCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							//CARD1_P1 cahnges stoinost
 						}
 					}
 					if (CARD1_P1C == OneOrCard)
