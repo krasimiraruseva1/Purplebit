@@ -81,6 +81,7 @@ int main(int argc, char* args[])
 
 	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
+	SDL_Texture* PlayerVisBlock = window.loadTexture("../assets/turnCoverer.png");
 	SDL_Texture* PvC = window.loadTexture("../assets/PvC.png");
 	SDL_Texture* PvCnot = window.loadTexture("../assets/PvCnot.png");
 	SDL_Texture* PvP = window.loadTexture("../assets/PvP.png");
@@ -104,9 +105,12 @@ int main(int argc, char* args[])
 
 	SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0);
 
-	ENTITY mainScreen(0, 0, mainMenu); //Button goes here
+	ENTITY mainScreen(0, 0, mainMenu);
 	ENTITY playmatScreen(0, 0, playmat);
+	ENTITY playerBlockRect(0, 0, PlayerVisBlock);
+
 	bool gameRunning = true;
+	bool isP1turn = true;
 	SDL_Event event;
 	ENTITY PvCButton(360, 250, PvC);
 	ENTITY PvCnotButton(377, 363, PvCnot);
@@ -546,16 +550,16 @@ int main(int argc, char* args[])
 				ENTITY INIT4(745, 305, INITCARD4);
 				ENTITY INIT5(873, 305, INITCARD5);
 
-				ENTITY INIT1(430, 420, LINE4CARD1);
-				ENTITY INIT2(560, 420, LINE4CARD2);
-				ENTITY INIT3(590, 420, LINE4CARD3);
-				ENTITY INIT4(800, 420, LINE4CARD4);
-				ENTITY INIT5(490, 485, LINE3CARD1);
-				ENTITY INIT5(620, 485, LINE3CARD2);
-				ENTITY INIT5(746, 465, LINE3CARD3);
-				ENTITY INIT5(560, 570, LINE2CARD1);
-				ENTITY INIT5(690, 570, LINE2CARD2);
-				ENTITY INIT5(620, 615, LINE1CARD1);
+				ENTITY L4_CARD1(430, 420, LINE4CARD1);
+				ENTITY L4_CARD2(560, 420, LINE4CARD2);
+				ENTITY L4_CARD3(590, 420, LINE4CARD3);
+				ENTITY L4_CARD4(800, 420, LINE4CARD4);
+				ENTITY L3_CARD1(490, 485, LINE3CARD1);
+				ENTITY L3_CARD2(620, 485, LINE3CARD2);
+				ENTITY L3_CARD3(746, 465, LINE3CARD3);
+				ENTITY L2_CARD1(560, 570, LINE2CARD1);
+				ENTITY L2_CARD2(690, 570, LINE2CARD2);
+				ENTITY L1_CARD1(620, 615, LINE1CARD1);
 
 				
 				static ENTITY CARD1_P1(75, 450, CARD1_P1C);
@@ -1166,6 +1170,18 @@ int main(int argc, char* args[])
 				window.render(CARD2_P2);
 				window.render(CARD3_P2);
 				window.render(CARD4_P2);
+
+				window.render(playerBlockRect);
+
+				if (CARD1_P1.getX() != 75)
+				{
+					isP1turn = false;
+				}
+				if (isP1turn == false)
+				{
+					playerBlockRect.setY(360);
+					SDL_RenderCopy(renderer, PlayerVisBlock, NULL, NULL);
+				}
 
 				while (tempCount != 48) {
 					std::cout << deck[tempCount] << std::endl;
