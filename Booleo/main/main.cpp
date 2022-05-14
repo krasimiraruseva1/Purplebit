@@ -557,8 +557,8 @@ int main(int argc, char* args[])
 				ENTITY L3_CARD1(490, 485, LINE3CARD1);
 				ENTITY L3_CARD2(620, 485, LINE3CARD2);
 				ENTITY L3_CARD3(746, 465, LINE3CARD3);
-				ENTITY L2_CARD1(560, 570, LINE2CARD1);
 				ENTITY L2_CARD2(690, 570, LINE2CARD2);
+				ENTITY L2_CARD1(560, 570, LINE2CARD1);
 				ENTITY L1_CARD1(620, 615, LINE1CARD1);
 
 				
@@ -567,11 +567,39 @@ int main(int argc, char* args[])
 				static ENTITY CARD3_P1(160, 450, CARD3_P1C);
 				static ENTITY CARD4_P1(160, 570, CARD4_P1C);
 
-				if (CARD1_P1.isMouseClicked())
+
+				static ENTITY CARD1_P2(77, 40, CARD1_P2C);
+				static ENTITY CARD2_P2(77, 160, CARD2_P2C);
+				static ENTITY CARD3_P2(160, 40, CARD3_P2C);
+				static ENTITY CARD4_P2(160, 160, CARD4_P2C);
+
+				if (isP1turn)
 				{
-					CARD1_P1.setDraggable(!CARD1_P1.getDrag());
+					if (CARD1_P1.isMouseClicked())
+					{
+						CARD1_P1.setDraggable(!CARD1_P1.getDrag());
+						CARD1_P1.drag();
+					}
+
+					if (CARD2_P1.isMouseClicked())
+					{
+						CARD2_P1.setDraggable(!CARD1_P1.getDrag());
+						CARD2_P1.drag();
+					}
+
+					if (CARD3_P1.isMouseClicked())
+					{
+						CARD3_P1.setDraggable(!CARD1_P1.getDrag());
+						CARD3_P1.drag();
+					}
+
+					if (CARD4_P1.isMouseClicked())
+					{
+						CARD4_P1.setDraggable(!CARD1_P1.getDrag());
+						CARD4_P1.drag();
+					}
 				}
-				//Check avilabilaty of CARD1 on line 4 card1
+				//Check availability of CARD1 on line 4 card1
 				if (CARD1_P1.getX() >= 425 && CARD1_P1.getX() <= 435 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -628,7 +656,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 4 card2
+				//Check availability of CARD1 on line 4 card2
 				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 665 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -691,7 +719,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 4 card3
+				//Check availability of CARD1 on line 4 card3
 				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -747,7 +775,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 4 card4
+				//Check availability of CARD1 on line 4 card4
 				if (CARD1_P1.getX() >= 795 && CARD1_P1.getX() <= 805 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -803,7 +831,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 3 card1
+				//Check availability of CARD1 on line 3 card1
 				if (CARD1_P1.getX() >= 485 && CARD1_P1.getX() <= 495 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -859,7 +887,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 3 card2
+				//Check availability of CARD1 on line 3 card2
 				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -915,7 +943,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 3 card3
+				//Check availability of CARD1 on line 3 card3
 				if (CARD1_P1.getX() >= 740 && CARD1_P1.getX() <= 750 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -971,7 +999,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 2 card1
+				//Check availability of CARD1 on line 2 card1
 				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 560 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1027,7 +1055,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 2 card2
+				//Check availability of CARD1 on line 2 card2
 				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1083,7 +1111,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check avilabilaty of CARD1 on line 1 card1
+				//Check availability of CARD1 on line 1 card1
 				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 615 && CARD1_P1.getY() <= 620)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1139,18 +1167,13 @@ int main(int argc, char* args[])
 					}
 				}
 
-
-
-
-				CARD1_P1.drag();
+				/*CARD1_P1.drag();
+				CARD2_P1.drag();
+				CARD3_P1.drag();
+				CARD4_P1.drag()*/;
 
 				//CARD3_P1.setDraggable(true);
 				//CARD4_P1.setDraggable(true);
-
-				ENTITY CARD1_P2(77, 40, CARD1_P2C);
-				ENTITY CARD2_P2(77, 160, CARD2_P2C);
-				ENTITY CARD3_P2(160, 40, CARD3_P2C);
-				ENTITY CARD4_P2(160, 160, CARD4_P2C);
 
 				ENTITY DRAWDECK(125, 303, DeckAsset);
 				window.render(DRAWDECK);
@@ -1171,16 +1194,41 @@ int main(int argc, char* args[])
 				window.render(CARD3_P2);
 				window.render(CARD4_P2);
 
-				window.render(playerBlockRect);
+				//window.render(playerBlockRect);
 
 				if (CARD1_P1.getX() != 75)
 				{
 					isP1turn = false;
 				}
+
 				if (isP1turn == false)
 				{
 					playerBlockRect.setY(360);
 					SDL_RenderCopy(renderer, PlayerVisBlock, NULL, NULL);
+				
+					if (CARD1_P2.isMouseClicked())
+					{
+						CARD1_P2.setDraggable(!CARD1_P2.getDrag());
+						CARD1_P2.drag();
+					}
+
+					if (CARD2_P2.isMouseClicked())
+					{
+						CARD2_P2.setDraggable(!CARD2_P2.getDrag());
+						CARD2_P2.drag();
+					}
+
+					if (CARD3_P2.isMouseClicked())
+					{
+						CARD3_P2.setDraggable(!CARD3_P2.getDrag());
+						CARD3_P2.drag();
+					}
+
+					if (CARD4_P2.isMouseClicked())
+					{
+						CARD4_P2.setDraggable(!CARD4_P2.getDrag());
+						CARD4_P2.drag();
+					}
 				}
 
 				while (tempCount != 48) {
