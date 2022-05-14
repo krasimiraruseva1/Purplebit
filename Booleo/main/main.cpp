@@ -1,39 +1,36 @@
 #include "RenderWindow.hpp"
 #include "entity.hpp"
-#include "libraries.hpp"
+#include "libraries.hpp" //include libraries
 #include "utilities.hpp"
 #include "entity.hpp"
-#include "main.hpp"
-#include "GamePlay.hpp"
+#include "main.hpp" //include header files
 
-std::string P1hand[10];
+std::string P1hand[10]; //declare player cards in hand and deck
 std::string P2hand[10];
 std::string deck[48];
 
-SDL_Rect* selectedRect = NULL;
-bool leftMouseButtonDown = false;
-SDL_Point mousePos;
+SDL_Rect* selectedRect = NULL; 
+bool leftMouseButtonDown = false; //declares if left mouse button is pressed
+SDL_Point mousePos; //checks mouse position
 
-int main(int argc, char* args[])
+int main(int argc, char* args[]) //initializes program
 {
-	if (SDL_Init(SDL_INIT_VIDEO) > 0)
+	if (SDL_Init(SDL_INIT_VIDEO) > 0) //if program fails to initialize
 	{
-		std::cout << "SDL Error: " << SDL_GetError() << std::endl;
+		std::cout << "SDL Error: " << SDL_GetError() << std::endl; //shows error
 	}
 
-	if (!(IMG_Init(IMG_INIT_PNG)))
+	if (!(IMG_Init(IMG_INIT_PNG))) //if image fails to initialize
 	{
-		std::cout << "IMG Error: " << SDL_GetError() << std::endl;
+		std::cout << "IMG Error: " << SDL_GetError() << std::endl; //shows error
 	}
 
-	RenderWindow window("Booleo", 1280, 720);
+	RenderWindow window("Booleo", 1280, 720);	//renders window named "Booleo" with size 1280x720
 	bool home = true;
-	int buttonPressed = NULL;
-	GamePlay gameplay;
+	int buttonPressed = NULL; 
 
-
-	srand(time(0));
-	for (int i = 0; i < 48; i++)
+	srand(time(0)); //declares random number
+	for (int i = 0; i < 48; i++) //shuffles deck
 	{
 		if (i <= 7)
 		{
@@ -68,9 +65,9 @@ int main(int argc, char* args[])
 		deck[index] = temp;
 	}
 
-	std::string initialCards[6] = { "ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2" };
+	std::string initialCards[6] = { "ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2" }; //declares initial cards
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 6; i++) //shuffles initial cards
 	{
 		int index = rand() % 6;
 		std::string temp = initialCards[i];
@@ -79,7 +76,7 @@ int main(int argc, char* args[])
 	}
 
 
-	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png");
+	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png"); //loads larger textures
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
 	SDL_Texture* PlayerVisBlock = window.loadTexture("../assets/turnCoverer.png");
 	SDL_Texture* PvC = window.loadTexture("../assets/PvC.png");
@@ -87,7 +84,7 @@ int main(int argc, char* args[])
 	SDL_Texture* PvP = window.loadTexture("../assets/PvP.png");
 	SDL_Texture* PvPnot = window.loadTexture("../assets/PvPnot.png");
 
-	SDL_Texture* BackCard = window.loadTexture("../assets/BackCard.png");
+	SDL_Texture* BackCard = window.loadTexture("../assets/BackCard.png"); //loads card textures
 	SDL_Texture* DeckAsset = window.loadTexture("../assets/CardDeck.png");
 
 	SDL_Texture* NotCard = window.loadTexture("../assets/NotCard.png");
@@ -103,37 +100,35 @@ int main(int argc, char* args[])
 	SDL_Texture* OneOne = window.loadTexture("../assets/StartingCardOneOne.png");
 	SDL_Texture* OneZero = window.loadTexture("../assets/StartingCardOneZero.png");
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0);
+	SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0); //creates renderer
 
-	ENTITY mainScreen(0, 0, mainMenu);
+	ENTITY mainScreen(0, 0, mainMenu); //declares entities to load proper texture with
 	ENTITY playmatScreen(0, 0, playmat);
 	ENTITY playerBlockRect(0, 0, PlayerVisBlock);
 
-	bool gameRunning = true;
-	bool isP1turn = true;
-	SDL_Event event;
-	ENTITY PvCButton(360, 250, PvC);
+	bool gameRunning = true; //declares if game is running
+	bool isP1turn = true; //declares proper player's turn
+	SDL_Event event; //declares event (something on screen happening)
+	ENTITY PvCButton(360, 250, PvC); //declares button entities
 	ENTITY PvCnotButton(377, 363, PvCnot);
 	ENTITY PvPButton(385, 495, PvP);
 	ENTITY PvPnotButton(396, 575, PvPnot);
 
-	const float timeAdvanced = 0.01;
+	const float timeAdvanced = 0.01; //declares ttools for game optimization
 	float accumulator = 0.0;
-	float currentTime = utils::hireTimeInSeconds();
+	float currentTime = utils::hireTimeInSeconds(); //declares current time
 
-	int tempCount = 0; //h
-
-	while (gameRunning)
+	while (gameRunning) //initializes game cycle
 	{
-		int startTicks = SDL_GetTicks();
+		int startTicks = SDL_GetTicks(); //starts ticks
 		float newTime = utils::hireTimeInSeconds();
 		float frameTime = newTime - currentTime;
 		currentTime = newTime;
 
 		accumulator += frameTime;
-		while (accumulator >= timeAdvanced)
+		while (accumulator >= timeAdvanced) //limits cpu usage
 		{
-			while (SDL_PollEvent(&event))
+			while (SDL_PollEvent(&event)) //lets player stop program by closing window
 			{
 				if (event.type == SDL_QUIT)
 					gameRunning = false;
@@ -142,16 +137,16 @@ int main(int argc, char* args[])
 		}
 		const float alpha = accumulator / timeAdvanced;
 
-		window.clear();
-		if (home) {
+		window.clear(); // clears window
+		if (home) { //prints home screen
 			ShowHome(window, mainScreen, PvCButton, PvCnotButton, PvPButton, PvPnotButton, home, buttonPressed);
 		}
 		else {
-			window.clear();
-			window.render(playmatScreen);
+			window.clear(); //clears window screen
+			window.render(playmatScreen); //prints playmat
 			if (buttonPressed == 1)
 			{
-				SDL_Texture* INITCARD1 = NULL;
+				SDL_Texture* INITCARD1 = NULL; //declares initial card textures
 				SDL_Texture* INITCARD2 = NULL;
 				SDL_Texture* INITCARD3 = NULL;
 				SDL_Texture* INITCARD4 = NULL;
@@ -162,6 +157,29 @@ int main(int argc, char* args[])
 				SDL_Texture* LINE4CARD3 = NULL;
 				SDL_Texture* LINE4CARD4 = NULL;
 
+				SDL_Rect LINE4CARD1rect;
+				LINE4CARD1rect.x = 430;
+				LINE4CARD1rect.y = 420;
+				LINE4CARD1rect.w = 71;
+				LINE4CARD1rect.h = 100;
+
+				SDL_Rect LINE4CARD2rect;
+				LINE4CARD2rect.x = 560;
+				LINE4CARD2rect.y = 420;
+				LINE4CARD2rect.w = 71;
+				LINE4CARD2rect.h = 100;
+
+				SDL_Rect LINE4CARD3rect;
+				LINE4CARD3rect.x = 685;
+				LINE4CARD3rect.y = 420;
+				LINE4CARD3rect.w = 71;
+				LINE4CARD3rect.h = 100;
+
+				SDL_Rect LINE4CARD4rect;
+				LINE4CARD4rect.x = 800;
+				LINE4CARD4rect.y = 420;
+				LINE4CARD4rect.w = 71;
+				LINE4CARD4rect.h = 100;
 
 				SDL_Texture* LINE3CARD1 = NULL;
 				SDL_Texture* LINE3CARD2 = NULL;
@@ -172,7 +190,7 @@ int main(int argc, char* args[])
 
 				SDL_Texture* LINE1CARD1 = NULL;
 
-				SDL_Texture* CARD1_P1C = NULL;
+				SDL_Texture* CARD1_P1C = NULL; //declares cards in hand textures
 				SDL_Texture* CARD2_P1C = NULL;
 				SDL_Texture* CARD3_P1C = NULL;
 				SDL_Texture* CARD4_P1C = NULL;
@@ -183,7 +201,7 @@ int main(int argc, char* args[])
 				SDL_Texture* CARD4_P2C = NULL;
 
 
-				for (int i = 0; i < 5; i++)
+				for (int i = 0; i < 5; i++) //gives random value to deck cards
 				{
 					if (i == 0)
 					{
@@ -336,7 +354,7 @@ int main(int argc, char* args[])
 							CARD1_P1C = ZeroXorCard;
 							
 						}
-						else if (deck[i] == "XOR1") //here
+						else if (deck[i] == "XOR1")
 						{
 							CARD1_P1C = OneOrCard;
 					
@@ -544,25 +562,25 @@ int main(int argc, char* args[])
 					}
 				}
 
-				ENTITY INIT1(360, 305, INITCARD1);
+				ENTITY INIT1(360, 305, INITCARD1); //declares initial cards as entities 
 				ENTITY INIT2(487, 305, INITCARD2);
 				ENTITY INIT3(614, 305, INITCARD3);
 				ENTITY INIT4(745, 305, INITCARD4);
 				ENTITY INIT5(873, 305, INITCARD5);
 
-				ENTITY L4_CARD1(430, 420, LINE4CARD1);
-				ENTITY L4_CARD2(560, 420, LINE4CARD2);
-				ENTITY L4_CARD3(590, 420, LINE4CARD3);
 				ENTITY L4_CARD4(800, 420, LINE4CARD4);
-				ENTITY L3_CARD1(490, 485, LINE3CARD1);
-				ENTITY L3_CARD2(620, 485, LINE3CARD2);
+				ENTITY L4_CARD3(590, 420, LINE4CARD3);
+				ENTITY L4_CARD2(560, 420, LINE4CARD2);
+				ENTITY L4_CARD1(430, 420, LINE4CARD1);
 				ENTITY L3_CARD3(746, 465, LINE3CARD3);
+				ENTITY L3_CARD2(620, 485, LINE3CARD2);
+				ENTITY L3_CARD1(490, 485, LINE3CARD1);
 				ENTITY L2_CARD2(690, 570, LINE2CARD2);
 				ENTITY L2_CARD1(560, 570, LINE2CARD1);
 				ENTITY L1_CARD1(620, 615, LINE1CARD1);
 
 				
-				static ENTITY CARD1_P1(75, 450, CARD1_P1C);
+				static ENTITY CARD1_P1(75, 450, CARD1_P1C); //declares player cards in hand as entities
 				static ENTITY CARD2_P1(75, 570, CARD2_P1C);
 				static ENTITY CARD3_P1(160, 450, CARD3_P1C);
 				static ENTITY CARD4_P1(160, 570, CARD4_P1C);
@@ -573,12 +591,12 @@ int main(int argc, char* args[])
 				static ENTITY CARD3_P2(160, 40, CARD3_P2C);
 				static ENTITY CARD4_P2(160, 160, CARD4_P2C);
 
-				if (isP1turn)
+				if (isP1turn) //makes cards draggable depending on which player's turn it is
 				{
-					if (CARD1_P1.isMouseClicked())
+					if (CARD1_P1.isMouseClicked()) //if mouse button is clicked/held
 					{
-						CARD1_P1.setDraggable(!CARD1_P1.getDrag());
-						CARD1_P1.drag();
+						CARD1_P1.setDraggable(!CARD1_P1.getDrag()); //make card draggable
+						CARD1_P1.drag(); //drag card
 					}
 
 					if (CARD2_P1.isMouseClicked())
@@ -599,13 +617,24 @@ int main(int argc, char* args[])
 						CARD4_P1.drag();
 					}
 				}
-				//Check availability of CARD1 on line 4 card1
+				//Check availability of CARD1 on line 4 card 1
 				if (CARD1_P1.getX() >= 425 && CARD1_P1.getX() <= 435 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
 					{
 						if (!(INITCARD1 == ZeroZero && INITCARD1 == OneZero) || !(INITCARD2 == OneZero && INITCARD2 == ZeroZero))
 						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD1 = ZeroOrCard;
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+						
+							SDL_RenderCopy(renderer, ZeroOrCard,  NULL, NULL);
+
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
@@ -618,12 +647,28 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD1 = OneOrCard;
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+
+							SDL_RenderCopy(renderer, OneOrCard,  NULL, NULL);
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
 
 					}
 					if (CARD1_P1C == ZeroAndCard)
 					{
 						if ((INITCARD1 == ZeroOne || INITCARD1 == OneOne) && (INITCARD2 == OneZero || INITCARD2 == OneOne))
 						{
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD1 = OneOrCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
@@ -635,6 +680,12 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD1 = OneOrCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
 
 					}
 					if (CARD1_P1C == ZeroXorCard)
@@ -643,7 +694,14 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
+					}
+					else
+					{
+						LINE4CARD1 = ZeroXorCard;
+						CARD1_P1.setX(75);
+						CARD1_P1.setY(450);
 					}
 					if (CARD1_P1C == OneXorCard)
 					{
@@ -652,11 +710,25 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
-
+						else
+						{
+							LINE4CARD1 = OneXorCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
 					}
 				}
+						if (LINE4CARD1 != NULL)
+						{
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  NULL, NULL);
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
+						window.render(L4_CARD1);
 
-				//Check availability of CARD1 on line 4 card2
+				//Check availability of CARD1 on line 4 card 2
 				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 665 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -668,10 +740,10 @@ int main(int argc, char* args[])
 						}
 						else
 						{ 
-							LINE4CARD1 = ZeroOrCard;
+							LINE4CARD2 = ZeroOrCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							//CARD1_P1 cahnges stoinost
+							  
 						}
 					}
 					if (CARD1_P1C == OneOrCard)
@@ -680,6 +752,14 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD2 = OneOrCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							
+							  
 						}
 
 					}
@@ -690,6 +770,14 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD2 = ZeroAndCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							
+							  
+						}
 					}
 					if (CARD1_P1C == OneAndCard)
 					{
@@ -697,6 +785,14 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD2 = OneAndCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							
+							  
 						}
 
 					}
@@ -707,6 +803,14 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD2 = ZeroXorCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							
+							  
+						}
 					}
 					if (CARD1_P1C == OneXorCard)
 					{
@@ -715,11 +819,27 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD2 = OneXorCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+						}
 
 					}
 				}
 
-				//Check availability of CARD1 on line 4 card3
+				if (LINE4CARD2 != NULL)
+				{
+					CARD1_P1.setX(75);
+					CARD1_P1.setY(450);
+					SDL_RenderCopy(renderer, CARD1_P1.getTex(), NULL, NULL);
+					CARD1_P1.setX(75);
+					CARD1_P1.setY(450);
+				}
+				window.render(L4_CARD2);
+
+				//Check availability of CARD1 on &LINE 4 card 3
 				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -729,6 +849,14 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD3 = ZeroOrCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+						}
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
@@ -736,6 +864,14 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD3 = OneOrCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
 						}
 
 					}
@@ -746,6 +882,14 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD3 = ZeroAndCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+						}
 					}
 					if (CARD1_P1C == OneAndCard)
 					{
@@ -753,6 +897,14 @@ int main(int argc, char* args[])
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+						}
+						else
+						{
+							LINE4CARD3 = OneAndCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
 						}
 
 					}
@@ -763,6 +915,14 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD3 = ZeroXorCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+						}
 					}
 					if (CARD1_P1C == OneXorCard)
 					{
@@ -771,11 +931,19 @@ int main(int argc, char* args[])
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
+						else
+						{
+							LINE4CARD3 = OneXorCard;
+							CARD1_P1.setX(75);
+							CARD1_P1.setY(450);
+							window.render(L4_CARD3);
+							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+						}
 
 					}
-				}
+				} 
 
-				//Check availability of CARD1 on line 4 card4
+				//Check availability of CARD1 on line 4 card 4
 				if (CARD1_P1.getX() >= 795 && CARD1_P1.getX() <= 805 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -831,7 +999,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 3 card1
+				//Check availability of CARD1 on line 3 card 1
 				if (CARD1_P1.getX() >= 485 && CARD1_P1.getX() <= 495 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -887,7 +1055,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 3 card2
+				//Check availability of CARD1 on line 3 card 2
 				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -943,7 +1111,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 3 card3
+				//Check availability of CARD1 on line 3 card 3
 				if (CARD1_P1.getX() >= 740 && CARD1_P1.getX() <= 750 && CARD1_P1.getY() >= 480 && CARD1_P1.getY() <= 490)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -999,7 +1167,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 2 card1
+				//Check availability of CARD1 on line 2 card 1
 				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 560 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1055,7 +1223,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 2 card2
+				//Check availability of CARD1 on line 2 card 2
 				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 565 && CARD1_P1.getY() <= 575)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1111,7 +1279,7 @@ int main(int argc, char* args[])
 					}
 				}
 
-				//Check availability of CARD1 on line 1 card1
+				//Check availability of CARD1 on line 1 card 1
 				if (CARD1_P1.getX() >= 615 && CARD1_P1.getX() <= 625 && CARD1_P1.getY() >= 615 && CARD1_P1.getY() <= 620)
 				{
 					if (CARD1_P1C == ZeroOrCard)
@@ -1167,14 +1335,6 @@ int main(int argc, char* args[])
 					}
 				}
 
-				/*CARD1_P1.drag();
-				CARD2_P1.drag();
-				CARD3_P1.drag();
-				CARD4_P1.drag()*/;
-
-				//CARD3_P1.setDraggable(true);
-				//CARD4_P1.setDraggable(true);
-
 				ENTITY DRAWDECK(125, 303, DeckAsset);
 				window.render(DRAWDECK);
 
@@ -1198,7 +1358,7 @@ int main(int argc, char* args[])
 
 				if (CARD1_P1.getX() != 75)
 				{
-					isP1turn = false;
+					//isP1turn = false;
 				}
 
 				if (isP1turn == false)
@@ -1231,10 +1391,6 @@ int main(int argc, char* args[])
 					}
 				}
 
-				while (tempCount != 48) {
-					std::cout << deck[tempCount] << std::endl;
-					tempCount++;
-				}
 			}
 			else if (buttonPressed == 2)
 			{

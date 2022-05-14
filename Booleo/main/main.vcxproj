@@ -154,13 +154,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="entity.cpp" />
-    <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="renderWindow.cpp" />
     <ClCompile Include="textureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GamePlay.hpp" />
     <ClInclude Include="libraries.hpp" />
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="main.hpp" />

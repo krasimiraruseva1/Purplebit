@@ -1,56 +1,56 @@
 #include "renderWindow.hpp"
 #include "libraries.hpp"
-#include "entity.hpp"
+#include "entity.hpp" //includes libraries
 
-RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
+RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h) //renders window
 	:window(NULL), renderer(NULL)
 {
-	window = SDL_CreateWindow(p_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, p_w, p_h, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow(p_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, p_w, p_h, SDL_WINDOW_SHOWN); //creates window
 
 	if (window == NULL)
 	{
-		std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
+		std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl; //prints out error if window fails to render
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); //here
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); //creates renderer
 }
 
-SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
+SDL_Texture* RenderWindow::loadTexture(const char* p_filePath) //loads texture
 {
-	SDL_Texture* texture = NULL;
+	SDL_Texture* texture = NULL; //declares texture
 	texture = IMG_LoadTexture(renderer, p_filePath);
 	if (texture == NULL)
 	{
-		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl;
+		std::cout << "Failed to load texture. Error: " << SDL_GetError() << std::endl; //prints out error if texture fails to load
 	}
-	return texture;
+	return texture; //returns texture
 }
 
-int RenderWindow::getRefreshRate()
+int RenderWindow::getRefreshRate() //gets refresh rate
 {
-	int displayIndex = SDL_GetWindowDisplayIndex(window);
-	SDL_DisplayMode mode;
-	SDL_GetDisplayMode(displayIndex, 0, &mode); //Passes memory address of mode
+	int displayIndex = SDL_GetWindowDisplayIndex(window); //gets index of the display associated with the window
+	SDL_DisplayMode mode; //declares display mode
+	SDL_GetDisplayMode(displayIndex, 0, &mode); //passes memory address of mode
 	
 	return mode.refresh_rate;
 }
 
-void RenderWindow::cleanUp()
+void RenderWindow::cleanUp() //cleans everything by destroying window
 {
 	SDL_DestroyWindow(window);
 }
 
-void RenderWindow::clear()
+void RenderWindow::clear() //clears window by removing rendered objects
 {
 	SDL_RenderClear(renderer);
 }
 
-SDL_Window* RenderWindow::getWindow()
+SDL_Window* RenderWindow::getWindow() //returns window
 {
 	return window;
 }
 
-void RenderWindow::render(ENTITY& p_entity)
+void RenderWindow::render(ENTITY& p_entity) //declares render
 {
 	SDL_Rect src;
 	src.x = p_entity.getCurrentFrame().x;
@@ -64,10 +64,10 @@ void RenderWindow::render(ENTITY& p_entity)
 	dest.w = p_entity.getCurrentFrame().w;
 	dest.h = p_entity.getCurrentFrame().h;
 
-	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dest);
+	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dest); //declares proper way of RenderCopy functioning
 }
 
-void RenderWindow::display()
+void RenderWindow::display() //renders display
 {
 	SDL_RenderPresent(renderer);
 }
