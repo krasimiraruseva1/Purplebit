@@ -86,6 +86,7 @@ int main(int argc, char* args[]) //initializes program
 
 	SDL_Texture* BackCard = window.loadTexture("../assets/BackCard.png"); //loads card textures
 	SDL_Texture* DeckAsset = window.loadTexture("../assets/CardDeck.png");
+	SDL_Texture* ComingSoon = window.loadTexture("../assets/ComingSoonScreen.png");
 
 	SDL_Texture* NotCard = window.loadTexture("../assets/NotCard.png");
 	SDL_Texture* OneAndCard = window.loadTexture("../assets/OneAndCard.png");
@@ -105,6 +106,7 @@ int main(int argc, char* args[]) //initializes program
 	ENTITY mainScreen(0, 0, mainMenu); //declares entities to load proper texture with
 	ENTITY playmatScreen(0, 0, playmat);
 	ENTITY playerBlockRect(0, 0, PlayerVisBlock);
+	ENTITY comingSoonScreen(0, 0, ComingSoon);
 
 	bool gameRunning = true; //declares if game is running
 	bool isP1turn = true; //declares proper player's turn
@@ -1398,11 +1400,11 @@ int main(int argc, char* args[]) //initializes program
 			}
 			else if (buttonPressed == 3)
 			{
-				window.render(PvCnotButton);
+				window.render(comingSoonScreen);
 			}
 			else if (buttonPressed == 4)
 			{
-				window.render(PvCnotButton);
+				window.render(comingSoonScreen);
 			}
 
 		}
