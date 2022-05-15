@@ -34,7 +34,7 @@
 
 
 
->Elena Keserdzhieva - Bckend developer
+>Elena Keserdzhieva - Backend developer
 
 
 
@@ -55,7 +55,7 @@
 
 
 
-<p align="center" font-size="40"><b>Our game contains home menu, from which the user can choose between four modes of playing the game Booleo. Then he goes to playmat where he can play the game</b></p>
+<p align="center" font-size="40"><b>Our game contains a home menu, from which the user can choose between four modes of playing the game Booleo. Then he goes to playmat where he can play the game</b></p>
 <p align="center">
 <img src = "https://media.discordapp.net/attachments/966340640919154739/975487660229554176/unknown.png?width=1082&height=612" height="70%" width = "65%">
 </p>

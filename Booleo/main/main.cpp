@@ -7,9 +7,9 @@
 
 std::string P1hand[10]; //declare player cards in hand and deck
 std::string P2hand[10];
-std::string deck[48];
-
-SDL_Rect* selectedRect = NULL; 
+CARD deck[48];
+int drawCount = 8;
+SDL_Rect* selectedRect = NULL;
 bool leftMouseButtonDown = false; //declares if left mouse button is pressed
 SDL_Point mousePos; //checks mouse position
 
@@ -27,54 +27,7 @@ int main(int argc, char* args[]) //initializes program
 
 	RenderWindow window("Booleo", 1280, 720);	//renders window named "Booleo" with size 1280x720
 	bool home = true;
-	int buttonPressed = NULL; 
-
-	srand(time(0)); //declares random number
-	for (int i = 0; i < 48; i++) //shuffles deck
-	{
-		if (i <= 7)
-		{
-			deck[i] = "OR0";
-		}
-		else if (i > 7 && i <= 15)
-		{
-			deck[i] = "OR1";
-		}
-		else if (i > 15 && i <= 23)
-		{
-			deck[i] = "AND0";
-		}
-		else if (i > 23 && i <= 31)
-		{
-			deck[i] = "AND1";
-		}
-		else if (i > 31 && i <= 39)
-		{
-			deck[i] = "XOR0";
-		}
-		else if (i > 39 && i <= 47)
-		{
-			deck[i] = "XOR1";
-		}
-	}
-	for (int i = 0; i < 48; i++)
-	{
-		int index = rand() % 48;
-		std::string temp = deck[i];
-		deck[i] = deck[index];
-		deck[index] = temp;
-	}
-
-	std::string initialCards[6] = { "ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2" }; //declares initial cards
-
-	for (int i = 0; i < 6; i++) //shuffles initial cards
-	{
-		int index = rand() % 6;
-		std::string temp = initialCards[i];
-		initialCards[i] = initialCards[index];
-		initialCards[index] = temp;
-	}
-
+	int buttonPressed = NULL;
 
 	SDL_Texture* mainMenu = window.loadTexture("../assets/mainScreen.png"); //loads larger textures
 	SDL_Texture* playmat = window.loadTexture("../assets/playmat.png");
@@ -86,7 +39,6 @@ int main(int argc, char* args[]) //initializes program
 
 	SDL_Texture* BackCard = window.loadTexture("../assets/BackCard.png"); //loads card textures
 	SDL_Texture* DeckAsset = window.loadTexture("../assets/CardDeck.png");
-	SDL_Texture* ComingSoon = window.loadTexture("../assets/ComingSoonScreen.png");
 
 	SDL_Texture* NotCard = window.loadTexture("../assets/NotCard.png");
 	SDL_Texture* OneAndCard = window.loadTexture("../assets/OneAndCard.png");
@@ -101,12 +53,64 @@ int main(int argc, char* args[]) //initializes program
 	SDL_Texture* OneOne = window.loadTexture("../assets/StartingCardOneOne.png");
 	SDL_Texture* OneZero = window.loadTexture("../assets/StartingCardOneZero.png");
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0); //creates renderer
+	SDL_Texture* PyrCard = window.loadTexture("../assets/PyrCard.png");
 
+
+	srand(time(0)); //declares random number
+	for (int i = 0; i < 48; i++) //shuffles deck
+	{
+		if (i <= 7)
+		{
+			deck[i].name = "OR0";
+			deck[i].texture = ZeroOrCard;
+		}
+		else if (i > 7 && i <= 15)
+		{
+			deck[i].name = "OR1";
+			deck[i].texture = OneOrCard;
+		}
+		else if (i > 15 && i <= 23)
+		{
+			deck[i].name = "AND0";
+			deck[i].texture = ZeroAndCard;
+		}
+		else if (i > 23 && i <= 31)
+		{
+			deck[i].name = "AND1";
+			deck[i].texture = OneAndCard;
+		}
+		else if (i > 31 && i <= 39)
+		{
+			deck[i].name = "XOR0";
+			deck[i].texture = ZeroXorCard;
+		}
+		else if (i > 39 && i <= 47)
+		{
+			deck[i].name = "XOR1";
+			deck[i].texture = OneXorCard;
+		}
+	}
+	for (int i = 0; i < 48; i++)
+	{
+		int index = rand() % 48;
+		std::swap(deck[i], deck[index]);
+	}
+
+	std::string initialCards[6] = { "ZEROONE","ZEROZERO", "ONEONE", "ONEZERO", "ONEZERO2", "ZEROONE2" }; //declares initial cards
+
+	for (int i = 0; i < 6; i++) //shuffles initial cards
+	{
+		int index = rand() % 6;
+		std::string temp = initialCards[i];
+		initialCards[i] = initialCards[index];
+		initialCards[index] = temp;
+	}
+
+	//SDL_Renderer* renderer = SDL_CreateRenderer(window.getWindow(), -1, 0); //creates renderer
+	//std::cout << SDL_GetError();
 	ENTITY mainScreen(0, 0, mainMenu); //declares entities to load proper texture with
 	ENTITY playmatScreen(0, 0, playmat);
 	ENTITY playerBlockRect(0, 0, PlayerVisBlock);
-	ENTITY comingSoonScreen(0, 0, ComingSoon);
 
 	bool gameRunning = true; //declares if game is running
 	bool isP1turn = true; //declares proper player's turn
@@ -140,10 +144,12 @@ int main(int argc, char* args[]) //initializes program
 		const float alpha = accumulator / timeAdvanced;
 
 		window.clear(); // clears window
-		if (home) { //prints home screen
+		if (home)
+		{ //prints home screen
 			ShowHome(window, mainScreen, PvCButton, PvCnotButton, PvPButton, PvPnotButton, home, buttonPressed);
 		}
-		else {
+		else
+		{
 			window.clear(); //clears window screen
 			window.render(playmatScreen); //prints playmat
 			if (buttonPressed == 1)
@@ -154,10 +160,10 @@ int main(int argc, char* args[]) //initializes program
 				SDL_Texture* INITCARD4 = NULL;
 				SDL_Texture* INITCARD5 = NULL;
 
-				SDL_Texture* LINE4CARD1 = NULL;
-				SDL_Texture* LINE4CARD2 = NULL;
-				SDL_Texture* LINE4CARD3 = NULL;
-				SDL_Texture* LINE4CARD4 = NULL;
+				SDL_Texture* LINE4CARD1 = PyrCard;
+				SDL_Texture* LINE4CARD2 = PyrCard;
+				SDL_Texture* LINE4CARD3 = PyrCard;
+				SDL_Texture* LINE4CARD4 = PyrCard;
 
 				SDL_Rect LINE4CARD1rect;
 				LINE4CARD1rect.x = 430;
@@ -333,33 +339,34 @@ int main(int argc, char* args[]) //initializes program
 				{
 					if (i == 0)
 					{
-						if (deck[i] == "OR0")
+						if (deck[i].name == "OR0")
 						{
 							CARD1_P1C = ZeroOrCard;
+							deck[i].texture = ZeroOrCard;
 						}
-						else if (deck[i] == "OR1")
+						else if (deck[i].name == "OR1")
 						{
 							CARD1_P1C = OneOrCard;
 						}
-						else if (deck[i] == "AND0")
+						else if (deck[i].name == "AND0")
 						{
 							CARD1_P1C = ZeroAndCard;
-							
+
 						}
-						else if (deck[i] == "AND1")
+						else if (deck[i].name == "AND1")
 						{
 							CARD1_P1C = OneAndCard;
-							
+
 						}
-						else if (deck[i] == "XOR0")
+						else if (deck[i].name == "XOR0")
 						{
 							CARD1_P1C = ZeroXorCard;
-							
+
 						}
-						else if (deck[i] == "XOR1")
+						else if (deck[i].name == "XOR1")
 						{
 							CARD1_P1C = OneOrCard;
-					
+
 						}
 
 
@@ -367,27 +374,27 @@ int main(int argc, char* args[]) //initializes program
 					}
 					else if (i == 1)
 					{
-						if (deck[i] == "OR0")
+						if (deck[i].name == "OR0")
 						{
 							CARD2_P1C = ZeroOrCard;
 						}
-						else if (deck[i] == "OR1")
+						else if (deck[i].name == "OR1")
 						{
 							CARD2_P1C = OneOrCard;
 						}
-						else if (deck[i] == "AND0")
+						else if (deck[i].name == "AND0")
 						{
 							CARD2_P1C = ZeroAndCard;
 						}
-						else if (deck[i] == "AND1")
+						else if (deck[i].name == "AND1")
 						{
 							CARD2_P1C = OneAndCard;
 						}
-						else if (deck[i] == "XOR0")
+						else if (deck[i].name == "XOR0")
 						{
 							CARD2_P1C = ZeroXorCard;
 						}
-						else if (deck[i] == "XOR1")
+						else if (deck[i].name == "XOR1")
 						{
 							CARD2_P1C = OneOrCard;
 						}
@@ -395,54 +402,54 @@ int main(int argc, char* args[]) //initializes program
 
 					else if (i == 2)
 					{
-						if (deck[i] == "OR0")
+						if (deck[i].name == "OR0")
 						{
 							CARD3_P1C = ZeroOrCard;
 						}
-						else if (deck[i] == "OR1")
+						else if (deck[i].name == "OR1")
 						{
 							CARD3_P1C = OneOrCard;
 						}
-						else if (deck[i] == "AND0")
+						else if (deck[i].name == "AND0")
 						{
 							CARD3_P1C = ZeroAndCard;
 						}
-						else if (deck[i] == "AND1")
+						else if (deck[i].name == "AND1")
 						{
 							CARD3_P1C = OneAndCard;
 						}
-						else if (deck[i] == "XOR0")
+						else if (deck[i].name == "XOR0")
 						{
 							CARD3_P1C = ZeroXorCard;
 						}
-						else if (deck[i] == "XOR1")
+						else if (deck[i].name == "XOR1")
 						{
 							CARD3_P1C = OneOrCard;
 						}
 					}
 					else if (i == 3)
 					{
-						if (deck[i] == "OR0")
+						if (deck[i].name == "OR0")
 						{
 							CARD4_P1C = ZeroOrCard;
 						}
-						else if (deck[i] == "OR1")
+						else if (deck[i].name == "OR1")
 						{
 							CARD4_P1C = OneOrCard;
 						}
-						else if (deck[i] == "AND0")
+						else if (deck[i].name == "AND0")
 						{
 							CARD4_P1C = ZeroAndCard;
 						}
-						else if (deck[i] == "AND1")
+						else if (deck[i].name == "AND1")
 						{
 							CARD4_P1C = OneAndCard;
 						}
-						else if (deck[i] == "XOR0")
+						else if (deck[i].name == "XOR0")
 						{
 							CARD4_P1C = ZeroXorCard;
 						}
-						else if (deck[i] == "XOR1")
+						else if (deck[i].name == "XOR1")
 						{
 							CARD4_P1C = OneOrCard;
 						}
@@ -452,27 +459,27 @@ int main(int argc, char* args[]) //initializes program
 					{
 						if (i == 4)
 						{
-							if (deck[i] == "OR0")
+							if (deck[i].name == "OR0")
 							{
 								CARD1_P2C = ZeroOrCard;
 							}
-							else if (deck[i] == "OR1")
+							else if (deck[i].name == "OR1")
 							{
 								CARD1_P2C = OneOrCard;
 							}
-							else if (deck[i] == "AND0")
+							else if (deck[i].name == "AND0")
 							{
 								CARD1_P2C = ZeroAndCard;
 							}
-							else if (deck[i] == "AND1")
+							else if (deck[i].name == "AND1")
 							{
 								CARD1_P2C = OneAndCard;
 							}
-							else if (deck[i] == "XOR0")
+							else if (deck[i].name == "XOR0")
 							{
 								CARD1_P2C = ZeroXorCard;
 							}
-							else if (deck[i] == "XOR1")
+							else if (deck[i].name == "XOR1")
 							{
 								CARD1_P2C = OneOrCard;
 							}
@@ -480,27 +487,27 @@ int main(int argc, char* args[]) //initializes program
 
 						else if (i == 5)
 						{
-							if (deck[i] == "OR0")
+							if (deck[i].name == "OR0")
 							{
 								CARD2_P2C = ZeroOrCard;
 							}
-							else if (deck[i] == "OR1")
+							else if (deck[i].name == "OR1")
 							{
 								CARD2_P2C = OneOrCard;
 							}
-							else if (deck[i] == "AND0")
+							else if (deck[i].name == "AND0")
 							{
 								CARD2_P2C = ZeroAndCard;
 							}
-							else if (deck[i] == "AND1")
+							else if (deck[i].name == "AND1")
 							{
 								CARD2_P2C = OneAndCard;
 							}
-							else if (deck[i] == "XOR0")
+							else if (deck[i].name == "XOR0")
 							{
 								CARD2_P2C = ZeroXorCard;
 							}
-							else if (deck[i] == "XOR1")
+							else if (deck[i].name == "XOR1")
 							{
 								CARD2_P2C = OneOrCard;
 							}
@@ -508,27 +515,27 @@ int main(int argc, char* args[]) //initializes program
 
 						else if (i == 6)
 						{
-							if (deck[i] == "OR0")
+							if (deck[i].name == "OR0")
 							{
 								CARD3_P2C = ZeroOrCard;
 							}
-							else if (deck[i] == "OR1")
+							else if (deck[i].name == "OR1")
 							{
 								CARD3_P2C = OneOrCard;
 							}
-							else if (deck[i] == "AND0")
+							else if (deck[i].name == "AND0")
 							{
 								CARD3_P2C = ZeroAndCard;
 							}
-							else if (deck[i] == "AND1")
+							else if (deck[i].name == "AND1")
 							{
 								CARD3_P2C = OneAndCard;
 							}
-							else if (deck[i] == "XOR0")
+							else if (deck[i].name == "XOR0")
 							{
 								CARD3_P2C = ZeroXorCard;
 							}
-							else if (deck[i] == "XOR1")
+							else if (deck[i].name == "XOR1")
 							{
 								CARD3_P2C = OneOrCard;
 							}
@@ -536,27 +543,27 @@ int main(int argc, char* args[]) //initializes program
 
 						else if (i == 7)
 						{
-							if (deck[i] == "OR0")
+							if (deck[i].name == "OR0")
 							{
 								CARD4_P2C = ZeroOrCard;
 							}
-							else if (deck[i] == "OR1")
+							else if (deck[i].name == "OR1")
 							{
 								CARD4_P2C = OneOrCard;
 							}
-							else if (deck[i] == "AND0")
+							else if (deck[i].name == "AND0")
 							{
 								CARD4_P2C = ZeroAndCard;
 							}
-							else if (deck[i] == "AND1")
+							else if (deck[i].name == "AND1")
 							{
 								CARD4_P2C = OneAndCard;
 							}
-							else if (deck[i] == "XOR0")
+							else if (deck[i].name == "XOR0")
 							{
 								CARD4_P2C = ZeroXorCard;
 							}
-							else if (deck[i] == "XOR1")
+							else if (deck[i].name == "XOR1")
 							{
 								CARD4_P2C = OneOrCard;
 							}
@@ -570,18 +577,18 @@ int main(int argc, char* args[]) //initializes program
 				ENTITY INIT4(745, 305, INITCARD4);
 				ENTITY INIT5(873, 305, INITCARD5);
 
-				ENTITY L4_CARD4(800, 420, LINE4CARD4);
-				ENTITY L4_CARD3(590, 420, LINE4CARD3);
-				ENTITY L4_CARD2(560, 420, LINE4CARD2);
-				ENTITY L4_CARD1(430, 420, LINE4CARD1);
-				ENTITY L3_CARD3(746, 465, LINE3CARD3);
-				ENTITY L3_CARD2(620, 485, LINE3CARD2);
-				ENTITY L3_CARD1(490, 485, LINE3CARD1);
-				ENTITY L2_CARD2(690, 570, LINE2CARD2);
-				ENTITY L2_CARD1(560, 570, LINE2CARD1);
-				ENTITY L1_CARD1(620, 615, LINE1CARD1);
+				static ENTITY L4_CARD4(800, 420, LINE4CARD4);
+				static ENTITY L4_CARD3(690, 420, LINE4CARD3);
+				static ENTITY L4_CARD2(560, 420, LINE4CARD2);
+				static ENTITY L4_CARD1(430, 420, LINE4CARD1);
+				static ENTITY L3_CARD3(746, 465, LINE3CARD3);
+				static ENTITY L3_CARD2(620, 485, LINE3CARD2);
+				static ENTITY L3_CARD1(490, 485, LINE3CARD1);
+				static ENTITY L2_CARD2(690, 570, LINE2CARD2);
+				static ENTITY L2_CARD1(560, 570, LINE2CARD1);
+				static ENTITY L1_CARD1(620, 615, LINE1CARD1);
 
-				
+
 				static ENTITY CARD1_P1(75, 450, CARD1_P1C); //declares player cards in hand as entities
 				static ENTITY CARD2_P1(75, 570, CARD2_P1C);
 				static ENTITY CARD3_P1(160, 450, CARD3_P1C);
@@ -592,6 +599,8 @@ int main(int argc, char* args[]) //initializes program
 				static ENTITY CARD2_P2(77, 160, CARD2_P2C);
 				static ENTITY CARD3_P2(160, 40, CARD3_P2C);
 				static ENTITY CARD4_P2(160, 160, CARD4_P2C);
+
+				static ENTITY CARD_RANDOM(75, 330, CARD1_P1C);
 
 				if (isP1turn) //makes cards draggable depending on which player's turn it is
 				{
@@ -634,11 +643,17 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD1 = ZeroOrCard;
 							CARD1_P1.setX(L1_CARD1.getX());
 							CARD1_P1.setY(L1_CARD1.getY());
-						
-							SDL_RenderCopy(renderer, ZeroOrCard,  NULL, NULL);
 
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							drawCount++;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
+							std::cout << SDL_GetError();
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
 
 					}
@@ -651,13 +666,12 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD1 = OneOrCard;
-							CARD1_P1.setX(L1_CARD1.getX());
-							CARD1_P1.setY(L1_CARD1.getY());
-
-							SDL_RenderCopy(renderer, OneOrCard,  NULL, NULL);
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
 
 					}
@@ -670,9 +684,18 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD1 = OneOrCard;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
+							std::cout << SDL_GetError();
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
 					}
 					if (CARD1_P1C == OneAndCard)
@@ -684,9 +707,18 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD1 = OneOrCard;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
+							std::cout << SDL_GetError();
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
 
 					}
@@ -694,17 +726,27 @@ int main(int argc, char* args[]) //initializes program
 					{
 						if (INITCARD1 != INITCARD2)
 						{
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+
+						}
+						else
+						{
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
+							std::cout << SDL_GetError();
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 
 						}
 					}
-					else
-					{
-						LINE4CARD1 = ZeroXorCard;
-						CARD1_P1.setX(75);
-						CARD1_P1.setY(450);
-					}
+
 					if (CARD1_P1C == OneXorCard)
 					{
 						if (INITCARD1 == INITCARD2)
@@ -714,21 +756,22 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD1 = OneXorCard;
+							L4_CARD1.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							//std::cout << "CARD SHOULD BE PUT" << std::endl;
+
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
+							//std::cout << SDL_GetError();
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
+
 						}
 					}
 				}
-						if (LINE4CARD1 != NULL)
-						{
-							CARD1_P1.setX(L1_CARD1.getX());
-							CARD1_P1.setY(L1_CARD1.getY());
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  NULL, NULL);
-							CARD1_P1.setX(75);
-							CARD1_P1.setY(450);
-						}
-						window.render(L4_CARD1);
+
+				//window.render(L4_CARD1);
 
 				//Check availability of CARD1 on line 4 card 2
 				if (CARD1_P1.getX() >= 555 && CARD1_P1.getX() <= 665 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
@@ -741,27 +784,39 @@ int main(int argc, char* args[]) //initializes program
 							CARD1_P1.setY(450);
 						}
 						else
-						{ 
-							LINE4CARD2 = ZeroOrCard;
+						{
+							L4_CARD2.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							  
+
 						}
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD2 == ZeroOne || INITCARD2 == ZeroZero) && !(INITCARD3 == ZeroOne && INITCARD3 == ZeroZero))
+						if (!(INITCARD2 == ZeroOne || INITCARD2 == ZeroZero) && !(INITCARD3 == ZeroOne && INITCARD3 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
 						else
 						{
-							LINE4CARD2 = OneOrCard;
+							L4_CARD2.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							
-							  
+
+
 						}
 
 					}
@@ -774,11 +829,17 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD2 = ZeroAndCard;
+							L4_CARD2.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							
-							  
+
+
 						}
 					}
 					if (CARD1_P1C == OneAndCard)
@@ -790,12 +851,19 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD2 = OneAndCard;
+							L4_CARD2.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							
-							  
+
+
 						}
+
 
 					}
 					if (CARD1_P1C == ZeroXorCard)
@@ -807,11 +875,17 @@ int main(int argc, char* args[]) //initializes program
 						}
 						else
 						{
-							LINE4CARD2 = ZeroXorCard;
+							L4_CARD2.setTexture(CARD1_P1.getTex());
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							
-							  
+
+
 						}
 					}
 					if (CARD1_P1C == OneXorCard)
@@ -824,6 +898,12 @@ int main(int argc, char* args[]) //initializes program
 						else
 						{
 							LINE4CARD2 = OneXorCard;
+							CARD1_P1.setX(L1_CARD1.getX());
+							CARD1_P1.setY(L1_CARD1.getY());
+							std::cout << "CARD SHOULD BE PUT" << std::endl;
+							drawCount++;
+							//CARD1_P1.setTexture(deck[drawCount].texture);
+							//std::cout << SDL_RenderCopy(window.getRenderer(), L4_CARD1.getTex(), NULL, NULL);
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
 						}
@@ -831,15 +911,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 				}
 
-				if (LINE4CARD2 != NULL)
-				{
-					CARD1_P1.setX(75);
-					CARD1_P1.setY(450);
-					SDL_RenderCopy(renderer, CARD1_P1.getTex(), NULL, NULL);
-					CARD1_P1.setX(75);
-					CARD1_P1.setY(450);
-				}
-				window.render(L4_CARD2);
+
 
 				//Check availability of CARD1 on &LINE 4 card 3
 				if (CARD1_P1.getX() >= 685 && CARD1_P1.getX() <= 695 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
@@ -856,13 +928,13 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = ZeroOrCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD3 == ZeroOne || INITCARD3 == ZeroZero) && !(INITCARD4 == ZeroOne && INITCARD4 == ZeroZero))
+						if (!(INITCARD3 == ZeroOne || INITCARD3 == ZeroZero) && !(INITCARD4 == ZeroOne && INITCARD4 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -872,8 +944,8 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = OneOrCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
 
 					}
@@ -889,8 +961,7 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = ZeroAndCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
 					}
 					if (CARD1_P1C == OneAndCard)
@@ -905,8 +976,7 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = OneAndCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
 
 					}
@@ -922,8 +992,7 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = ZeroXorCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
 					}
 					if (CARD1_P1C == OneXorCard)
@@ -938,13 +1007,22 @@ int main(int argc, char* args[]) //initializes program
 							LINE4CARD3 = OneXorCard;
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
-							window.render(L4_CARD3);
-							SDL_RenderCopy(renderer, CARD1_P1.getTex(),  &LINE4CARD3rect, &LINE4CARD3rect);
+
+							//SDL_RenderCopy(window.getRenderer(), ZeroOrCard, NULL, CARD_RANDOM.getCurrentFramePtr());
 						}
-
 					}
-				} 
+				}
 
+
+
+				/*CARD1_P1C = NULL;
+				SDL_UpdateTexture(L4_CARD3.getTex(),NULL, &LINE4CARD3rect , 1280*4);
+				SDL_UpdateTexture(L4_CARD2.getTex(), NULL, &LINE4CARD2rect, 1280 * 4);
+				SDL_UpdateTexture(L4_CARD1.getTex(), NULL, &LINE4CARD1rect, 1280 * 4);
+				window.render(CARD1_P1);
+				window.render(L4_CARD1);
+				window.render(L4_CARD2);
+				window.render(L4_CARD3);*/
 				//Check availability of CARD1 on line 4 card 4
 				if (CARD1_P1.getX() >= 795 && CARD1_P1.getX() <= 805 && CARD1_P1.getY() >= 415 && CARD1_P1.getY() <= 425)
 				{
@@ -958,7 +1036,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD4 == ZeroOne || INITCARD4 == ZeroZero) && !(INITCARD5 == ZeroOne && INITCARD5 == ZeroZero))
+						if (!(INITCARD4 == ZeroOne || INITCARD4 == ZeroZero) && !(INITCARD5 == ZeroOne && INITCARD5 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1014,7 +1092,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1070,7 +1148,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1126,7 +1204,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1182,7 +1260,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1238,7 +1316,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1294,7 +1372,7 @@ int main(int argc, char* args[]) //initializes program
 					}
 					if (CARD1_P1C == OneOrCard)
 					{
-						if  (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
+						if (!(INITCARD1 == ZeroOne || INITCARD1 == ZeroZero) && !(INITCARD2 == ZeroOne && INITCARD2 == ZeroZero))
 						{
 							CARD1_P1.setX(75);
 							CARD1_P1.setY(450);
@@ -1346,6 +1424,10 @@ int main(int argc, char* args[]) //initializes program
 				window.render(INIT4);
 				window.render(INIT5);
 
+				window.render(L4_CARD1);
+				window.render(L4_CARD2);
+				window.render(L4_CARD3);
+
 				window.render(CARD1_P1);
 				window.render(CARD2_P1);
 				window.render(CARD3_P1);
@@ -1356,6 +1438,7 @@ int main(int argc, char* args[]) //initializes program
 				window.render(CARD3_P2);
 				window.render(CARD4_P2);
 
+				//window.render(CARD_RANDOM);
 				//window.render(playerBlockRect);
 
 				if (CARD1_P1.getX() != 75)
@@ -1366,8 +1449,8 @@ int main(int argc, char* args[]) //initializes program
 				if (isP1turn == false)
 				{
 					playerBlockRect.setY(360);
-					SDL_RenderCopy(renderer, PlayerVisBlock, NULL, NULL);
-				
+					SDL_RenderCopy(window.getRenderer(), PlayerVisBlock, NULL, NULL);
+
 					if (CARD1_P2.isMouseClicked())
 					{
 						CARD1_P2.setDraggable(!CARD1_P2.getDrag());
@@ -1392,7 +1475,13 @@ int main(int argc, char* args[]) //initializes program
 						CARD4_P2.drag();
 					}
 				}
+				/*SDL_RenderCopy(renderer, CARD1_P1C, NULL, &LINE4CARD1rect);
+				SDL_RenderCopy(renderer, CARD1_P1C, NULL, &LINE4CARD2rect);
+				SDL_RenderCopy(renderer, CARD1_P1C, NULL, &LINE4CARD3rect);*/
+				//window.render(L4_CARD1);
 
+
+				SDL_RenderPresent(window.getRenderer());
 			}
 			else if (buttonPressed == 2)
 			{
@@ -1400,11 +1489,11 @@ int main(int argc, char* args[]) //initializes program
 			}
 			else if (buttonPressed == 3)
 			{
-				window.render(comingSoonScreen);
+				window.render(PvCnotButton);
 			}
 			else if (buttonPressed == 4)
 			{
-				window.render(comingSoonScreen);
+				window.render(PvCnotButton);
 			}
 
 		}

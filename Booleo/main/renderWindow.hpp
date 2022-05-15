@@ -13,6 +13,8 @@ public:
 	SDL_Window* getWindow(); //returns window
 	void render(ENTITY& p_entity); //renders textures
 	void display(); //displays
+	SDL_Renderer* getRenderer();
+
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
