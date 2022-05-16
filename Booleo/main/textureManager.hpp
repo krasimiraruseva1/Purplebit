@@ -1,8 +1,10 @@
 #pragma once
-#include "libraries.hpp" //includes libraries
-
-class TextureManager //declares TextureManager class
+// includes libraries
+#include "libraries.hpp" 
+// declares TextureManager class
+class TextureManager 
 {
 public:
-	static SDL_Texture* Texture(const char* filelocation, SDL_Renderer* ren); //tells texture proper values to program
+	// tells texture proper values to program
+	static SDL_Texture* Texture(const char* filelocation, SDL_Renderer* ren); 
 };

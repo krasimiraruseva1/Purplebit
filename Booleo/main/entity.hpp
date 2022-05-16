@@ -1,42 +1,100 @@
-#pragma once //do only once
-#include "libraries.hpp" //add libraries
+// do only once
+#pragma once 
 
-class ENTITY //initialize ENTITY class
+// add libraries
+#include "libraries.hpp" 
+
+// initialize ENTITY class
+class ENTITY 
 {
 	public:
-		ENTITY(float p_x, float p_y, SDL_Texture* p_tex); //declares entity values
-		float getX(); //returns x
-		void setX(float value); //changes value of x
-		float getY();	//returns y
-		void setY(float value);	//changes value of y
-		void drag();	//initializes dragging of entity
-		void controlDrag();	//controls drag 
-		void setDraggable(bool active); //makes entity draggable/undraggable
-		bool isMouseClicked(); //says if mouse is clicked
-		bool getDrag(); //says if draggable
-		SDL_Texture* getTex(); //gets texture
-		void setTexture(SDL_Texture* tex); //changes texture
+
+	// declares entity values
+		ENTITY(float p_x, float p_y, SDL_Texture* p_tex); 
+
+		// returns x
+		float getX(); 
+
+		// changes value of x
+		void setX(float value); 
+
+		// returns y
+		float getY();	
+
+		// changes value of y
+		void setY(float value);	
+
+		// initializes dragging of entity
+		void drag();
+
+		// controls drag 
+		void controlDrag();	
+
+		// makes entity draggable/undraggable
+		void setDraggable(bool active);
+
+		// says if mouse is clicked
+		bool isMouseClicked();
+
+		// says if draggable
+		bool getDrag(); 
+
+		// gets texture
+		SDL_Texture* getTex(); 
+
+		// changes texture
+		void setTexture(SDL_Texture* tex); 
 		SDL_Rect getCurrentFrame();
-	private:	//initialize inaccessible variables
-		float x, y;	//coordinates
-		bool draggable = false;	//makes entity draggable/undraggable
-		SDL_Rect currentFrame;	//initializes current frame
-		SDL_Texture* texture;	//initializes texture
+
+		// initialize inaccessible variables
+	private:
+
+		// coordinates
+		float x, y;	
+
+		// makes entity draggable/undraggable
+		bool draggable = false;	
+
+		// initializes current frame
+		SDL_Rect currentFrame;
+		
+		// initializes texture
+		SDL_Texture* texture;	
 };
 
-class OBJECT //initializes object class
+
+//initializes object class
+class OBJECT 
 {
 	public: 
-		SDL_Texture* getTexture(); //returns texture
-		SDL_Rect* getSrc();	//gets source location
-		SDL_Rect* getDest(); //gets destination
-		void setSrc(int x, int y, int h, int w); //sets source
-		void setDest(int x, int y, int h, int w); //sets destinaton
-		void CreateTexture(const char* address, SDL_Renderer* ren); //creates texture
-		void virtual Render(SDL_Renderer* ren) = 0; //creates renderer
+
+		// returns texture
+		SDL_Texture* getTexture();
+
+		// gets source location
+		SDL_Rect* getSrc();
+
+		// gets destination
+		SDL_Rect* getDest();
+
+		// sets source
+		void setSrc(int x, int y, int h, int w); 
+
+		 // sets destinaton
+		void setDest(int x, int y, int h, int w);
+
+		// creates texture
+		void CreateTexture(const char* address, SDL_Renderer* ren);
+
+		// creates renderer
+		void virtual Render(SDL_Renderer* ren) = 0; 
 	private:
-		SDL_Rect* src, *dest; //initializes source and destination
-		SDL_Texture* tex; //initializes texture
+
+		// initializes source and destination
+		SDL_Rect* src, *dest; 
+
+		// initializes texture
+		SDL_Texture* tex; 
 };
 
 struct CARD

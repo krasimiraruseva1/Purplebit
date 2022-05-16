@@ -1,42 +1,42 @@
 #include "entity.hpp"
 #include "libraries.hpp"
 #include "renderWindow.hpp"
-#include "textureManager.hpp" //includes header files and libraries
+#include "textureManager.hpp" // includes header files and libraries
 
-ENTITY::ENTITY(float p_x, float p_y, SDL_Texture* p_tex) //declares proper entity values
+ENTITY::ENTITY(float p_x, float p_y, SDL_Texture* p_tex) // declares proper entity values
 	:x(p_x), y(p_y), texture(p_tex)
 {
-	currentFrame.x = 0;	//declares current frame coordinates
+	currentFrame.x = 0;	// declares current frame coordinates
 	currentFrame.y = 0;
-	SDL_Point size; //defines two dimensional point
-	SDL_QueryTexture(p_tex, NULL, NULL, &size.x, &size.y); //resets texture
+	SDL_Point size; // defines two dimensional point
+	SDL_QueryTexture(p_tex, NULL, NULL, &size.x, &size.y); // resets texture
 
-	currentFrame.w = size.x;	//declares current frame width
-	currentFrame.h = size.y;	//declares current frame height
+	currentFrame.w = size.x;	// declares current frame width
+	currentFrame.h = size.y;	// declares current frame height
 }
 
 
-float ENTITY::getX() //returns current x coord
+float ENTITY::getX() // returns current x coord
 {
 	return x;
 }
 
-void ENTITY::setX(float value) //modifies x
+void ENTITY::setX(float value) // modifies x
 {
 	x = value;
 }
 
-float ENTITY::getY() //teturns y
+float ENTITY::getY() // teturns y
 {
 	return y;
 }
 
-void ENTITY::setY(float value) //modifies y
+void ENTITY::setY(float value) // modifies y
 {
 	y = value;
 }
 
-void ENTITY::drag() //tells program how drag function works
+void ENTITY::drag() // tells program how drag function works
 {
 	if (draggable) 
 	{
@@ -46,36 +46,36 @@ void ENTITY::drag() //tells program how drag function works
 
 void ENTITY::controlDrag()
 {
-	int buttonX = 0, buttonY = 0; //declares button coords 
-	Uint32 buttons; //defines buttons as unsigned integer (32-bit)
+	int buttonX = 0, buttonY = 0; // declares button coords 
+	Uint32 buttons; // defines buttons as unsigned integer (32-bit)
 	SDL_PumpEvents();  // make sure we have the latest mouse state.
-	buttons = SDL_GetMouseState(&buttonX, &buttonY); //makes button equal to mouse state
+	buttons = SDL_GetMouseState(&buttonX, &buttonY); // makes button equal to mouse state
 	setX(buttonX - currentFrame.w / 2);
 	setY(buttonY - currentFrame.h / 2);
 }
 
 void ENTITY::setDraggable(bool active) 
 {
-	draggable = active; //makes draggable possible
+	draggable = active; // makes draggable possible
 }
 
-bool ENTITY::isMouseClicked() //checks if left mouse button is clicked
+bool ENTITY::isMouseClicked() // checks if left mouse button is clicked
 {
-	int x, y; //declares coordinates
+	int x, y; // declares coordinates
 	Uint32 buttons;
 
 	SDL_PumpEvents();  // makes sure we have the latest mouse state
 
 	buttons = SDL_GetMouseState(&x, &y); 
 
-	if ((buttons & SDL_BUTTON_LMASK) != 0) //if left button is pressed
+	if ((buttons & SDL_BUTTON_LMASK) != 0) // if left button is pressed
 	{
-		int width = getCurrentFrame().w; //change coordinates to mouse's position
+		int width = getCurrentFrame().w; // change coordinates to mouse's position
 		int height = getCurrentFrame().h;
 		if (getX() <= x && x <= getX() + width
 			&& getY() <= y && y <= getY() + height)
 		{
-			//SDL_Delay(60);
+			// SDL_Delay(60);
 			return true;
 		}
 	}
@@ -83,7 +83,7 @@ bool ENTITY::isMouseClicked() //checks if left mouse button is clicked
 	return false;
 }
 
-bool ENTITY::getDrag() //returns if draggable
+bool ENTITY::getDrag() // returns if draggable
 {
 	return draggable;
 }

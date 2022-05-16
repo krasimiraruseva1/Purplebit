@@ -31,7 +31,7 @@ int RenderWindow::getRefreshRate() //gets refresh rate
 	int displayIndex = SDL_GetWindowDisplayIndex(window); //gets index of the display associated with the window
 	SDL_DisplayMode mode; //declares display mode
 	SDL_GetDisplayMode(displayIndex, 0, &mode); //passes memory address of mode
-	
+
 	return mode.refresh_rate;
 }
 
@@ -50,7 +50,8 @@ SDL_Window* RenderWindow::getWindow() //returns window
 	return window;
 }
 
-void RenderWindow::render(ENTITY& p_entity) //declares render
+// declares render
+void RenderWindow::render(ENTITY& p_entity) 
 {
 	SDL_Rect src;
 	src.x = p_entity.getCurrentFrame().x;
@@ -64,7 +65,8 @@ void RenderWindow::render(ENTITY& p_entity) //declares render
 	dest.w = p_entity.getCurrentFrame().w;
 	dest.h = p_entity.getCurrentFrame().h;
 
-	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dest); //declares proper way of RenderCopy functioning
+	// declares proper way of RenderCopy functioning
+	SDL_RenderCopy(renderer, p_entity.getTex(), &src, &dest);
 }
 
 void RenderWindow::display() //renders display
